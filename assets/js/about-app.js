@@ -40,7 +40,7 @@
     var base      = 'https://' + DATA.DOMAIN;
     var pageUrl   = base + '/about.html';
     var pageTitle = 'عن المدرس \u2014 ' + DATA.BRAND_NAME;
-    var pageDesc  = META.descriptionShort + ' \u2014 تعرف على المدرس ورؤيتنا وطريقة عملنا.';
+    var pageDesc  = META.descriptionShort + ' \u2014 تعرف على السنتر ورؤيتنا وطريقة عملنا.';
 
     SP.injectBaseSEO({
       pageTitle:   pageTitle,
@@ -55,10 +55,10 @@
       return href && href.indexOf('about') !== -1;
     });
 
-    /* JSON-LD — ProfilePage */
+    /* JSON-LD — AboutPage for Education Center */
     SP.injectJsonLd({
       '@context':     'https://schema.org',
-      '@type':        'ProfilePage',
+      '@type':        'AboutPage',
       '@id':          pageUrl + '#webpage',
       'url':          pageUrl,
       'name':         pageTitle,
@@ -66,14 +66,15 @@
       'isPartOf':     { '@id': base + '/#website' },
       'inLanguage':   'ar',
       'mainEntity': {
-        '@type':      'Person',
+        '@type':      'EducationalOrganization',
         'name':       DATA.BRAND_NAME,
-        'jobTitle':   META.tagline,
+        'description': META.tagline,
         'url':        base,
-        'worksFor': {
-          '@type': 'Organization',
-          'name':  DATA.BRAND_NAME,
-          'url':   base
+        'address': {
+          '@type': 'PostalAddress',
+          'streetAddress': '8 شارع الحرية، ميدان المطرية',
+          'addressLocality': 'القاهرة',
+          'addressCountry': 'EG'
         }
       }
     }, 'jsonld-about');
@@ -99,7 +100,7 @@
     SP.buildFooterCategories(COURSE_BASE);
     SP.buildFooter();
 
-    U.announce('صفحة عن المدرس');
+    U.announce('صفحة عن السنتر');
   }
 
   if (document.readyState === 'loading') {

@@ -1,12 +1,9 @@
-/* ── Upgrade Summary ──
-   - Removed dead code: sharedObjectives, sharedCurriculum, sharedFaq (declared but never used)
-   - Added META.UI object with white-label UI strings previously hardcoded in controllers
-   - Added META.heroTitle, META.heroSubtitle, META.ctaTitle, META.ctaSubtitle for white-label hero/CTA
-   - Added META.levels map (English→Arabic) to centralize level label translations
-   - Added META.emptyStateTitle, META.emptyStateText for catalog empty state
-   - Normalized META.legalLastUpdated to consistent value
-   - Added trailing comments on each META key for Document 3 change-map traceability
-   - No structural changes to courses array or categories
+/* ── Alanwar.edu — Center Data Layer ──
+   Transformed from single-instructor biology platform
+   to multi-stage, multi-subject, multi-instructor education center.
+
+   Hierarchy: stages[] → grades[] → subjects[] → instructors[] → courses[]
+   Backward compat: categories{} auto-derived from subjects[]
    ── End Summary ── */
 
 'use strict';
@@ -23,383 +20,563 @@ var COURSE_DATA = (function () {
     return o;
   }
 
+  /* ── Stages ── */
+
+  var stages = [
+    { id: 'primary',     name: 'المرحلة الابتدائية' },
+    { id: 'preparatory', name: 'المرحلة الاعدادية'  }
+  ];
+
+  /* ── Grades ── */
+
+  var grades = [
+    { id: 'grade-4', stageId: 'primary',     name: 'الصف الرابع الابتدائي',  shortName: '4 ابتدائي' },
+    { id: 'grade-5', stageId: 'primary',     name: 'الصف الخامس الابتدائي',  shortName: '5 ابتدائي' },
+    { id: 'grade-6', stageId: 'primary',     name: 'الصف السادس الابتدائي',  shortName: '6 ابتدائي' },
+    { id: 'grade-7', stageId: 'preparatory', name: 'الصف الأول الاعدادي',    shortName: '1 اعدادي'  },
+    { id: 'grade-8', stageId: 'preparatory', name: 'الصف الثاني الاعدادي',   shortName: '2 اعدادي'  },
+    { id: 'grade-9', stageId: 'preparatory', name: 'الصف الثالث الاعدادي',   shortName: '3 اعدادي'  }
+  ];
+
+  /* ── Subjects ── */
+
+  var subjects = [
+    { id: 'arabic',  name: 'اللغة العربية',                  icon: 'bi-book',           color: 'emerald' },
+    { id: 'science', name: 'العلوم',                         icon: 'bi-virus2',         color: 'teal'    },
+    { id: 'math',    name: 'الرياضيات',                      icon: 'bi-calculator',     color: 'cyan'    },
+    { id: 'english', name: 'اللغة الإنجليزية',                icon: 'bi-translate',      color: 'purple'  },
+    { id: 'social',  name: 'الدراسات الاجتماعية',             icon: 'bi-globe-americas', color: 'amber'   },
+    { id: 'cs',      name: 'البرمجة وتكنولوجيا المعلومات',    icon: 'bi-code-slash',     color: 'rose'    }
+  ];
+
+  /* ── Instructors ── */
+
+  var instructors = [
+    { id: 'youssef-elsebae', name: 'مستر يوسف السبع',    subjectId: 'arabic',  phone: '', bio: 'مدرس لغة عربية للمرحلة الاعدادية والابتدائية' },
+    { id: 'mostafa-mahmoud', name: 'أ/ مصطفى محمود',     subjectId: 'science', phone: '', bio: 'مدرس علوم للمرحلة الابتدائية والاعدادية' },
+    { id: 'hussein-elmasry', name: 'الأستاذ حسين المصري', subjectId: 'cs',      phone: '', bio: 'رئيس قسم بمنطقة حدائق القبة — مدرس برمجة وتكنولوجيا المعلومات' }
+  ];
+
   /* ── Course Definitions ── */
 
   var courses = [
     {
       id: 1,
-      title: "الدعامة والحركة في الكائنات الحية — شرح كامل",
-      category: "الدعامة والحركة في الكائنات الحية",
+      title: "النحو — الأفعال الناسخة والحروف الناسخة",
+      category: "اللغة العربية",
+      stageId: "preparatory",
+      gradeId: "grade-7",
+      subjectId: "arabic",
+      instructorId: "youssef-elsebae",
       level: "Beginner",
-      price: 200.00,
-      originalPrice: 350.00,
+      price: 150.00,
+      originalPrice: 250.00,
       students: 0,
       lessons: 1,
       rating: 0,
       date: "2025-09-01",
       language: "ar",
-      description: "شرح تفصيلي للفصل الأول من منهج الأحياء للثانوية العامة: الجهاز الهيكلي والعضلي في الإنسان، آلية الانقباض العضلي، الدعامة والحركة في النبات. يشمل رسومات توضيحية محلولة وأسئلة امتحانات سابقة.",
+      description: "شرح كامل للأفعال الناسخة (كان وأخواتها) والحروف الناسخة (إنّ وأخواتها) لطلاب الصف الأول الاعدادي. يشمل التعريف والإعراب والتطبيقات والتمارين المحلولة من الكتاب المدرسي.",
       image: "og-image.png",
-      instructor: "مستر محمد السيد",
-      tags: ["أحياء", "ثانوية عامة", "دعامة", "حركة", "جهاز هيكلي", "عضلات", "انقباض عضلي"],
+      instructor: "مستر يوسف السبع",
+      tags: ["عربي", "نحو", "كان وأخواتها", "إنّ وأخواتها", "أولى اعدادي", "أفعال ناسخة", "حروف ناسخة"],
       driveUrl: "",
       learningObjectives: [
-        "فهم تركيب الجهاز الهيكلي — أنواع العظام والغضاريف ووظائفها",
-        "شرح آلية الانقباض العضلي بالتفصيل (نظرية الخيوط المنزلقة)",
-        "التمييز بين أنواع العضلات الثلاثة ومقارنة خصائصها",
-        "فهم الدعامة في النبات — الدعامة التركيبية والفسيولوجية",
-        "تحليل الرسومات التوضيحية الخاصة بالجهاز الهيكلي والعضلي",
-        "حل أسئلة علِّل وقارن واختر على الفصل كامل"
+        "التعرف على كان وأخواتها — أنواعها وعملها في الجملة الاسمية",
+        "إعراب اسم كان وخبرها بشكل صحيح",
+        "التعرف على إنّ وأخواتها وعملها في الجملة الاسمية",
+        "إعراب اسم إنّ وخبرها بشكل صحيح",
+        "التمييز بين الأفعال الناسخة والحروف الناسخة",
+        "حل تمارين إعرابية شاملة من الكتاب المدرسي"
       ],
       curriculum: [
         {
-          title: "مقدمة الفصل والجهاز الهيكلي",
+          title: "كان وأخواتها — الأفعال الناسخة",
           lessons: [
-            { title: "نظرة عامة — الدعامة والحركة وأهميتها", duration: "06:00", preview: true, previewUrl: "https://www.youtube.com/embed/r0cuXOQFdF8", previewThumb: "" },
-            { title: "تركيب العظام وأنواعها", duration: "14:00", preview: true, previewUrl: "https://www.youtube.com/embed/WHhK-gu07A4", previewThumb: "" },
-            { title: "الغضاريف والمفاصل — أنواعها ووظائفها", duration: "12:00", preview: false },
-            { title: "العمود الفقري والقفص الصدري — تركيب تفصيلي", duration: "15:00", preview: false }
+            { title: "مقدمة — الجملة الاسمية ودخول النواسخ عليها", duration: "08:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "كان وأخواتها — التعريف والأنواع", duration: "15:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "إعراب اسم كان وخبرها — أمثلة تطبيقية", duration: "18:00", preview: false },
+            { title: "تمارين محلولة على كان وأخواتها", duration: "20:00", preview: false }
           ]
         },
         {
-          title: "الجهاز العضلي وآلية الانقباض",
+          title: "إنّ وأخواتها — الحروف الناسخة",
           lessons: [
-            { title: "أنواع العضلات — هيكلية وملساء وقلبية", duration: "10:00", preview: false },
-            { title: "التركيب الدقيق للعضلة الهيكلية (الساركومير)", duration: "18:00", preview: false },
-            { title: "آلية الانقباض العضلي — نظرية الخيوط المنزلقة", duration: "20:00", preview: false },
-            { title: "مقارنات مهمة ورسومات محلولة", duration: "12:00", preview: false }
+            { title: "إنّ وأخواتها — التعريف والعمل", duration: "14:00", preview: false },
+            { title: "إعراب اسم إنّ وخبرها — أمثلة تطبيقية", duration: "16:00", preview: false },
+            { title: "الفرق بين الأفعال والحروف الناسخة", duration: "12:00", preview: false },
+            { title: "تمارين محلولة على إنّ وأخواتها", duration: "18:00", preview: false }
           ]
         },
         {
-          title: "الدعامة والحركة في النبات",
+          title: "مراجعة شاملة وتمارين",
           lessons: [
-            { title: "الدعامة التركيبية — السليلوز واللجنين والسوبرين", duration: "14:00", preview: false },
-            { title: "الدعامة الفسيولوجية — الامتلاء والانتفاخ", duration: "10:00", preview: false },
-            { title: "الحركة في النبات — الانتحاءات والمستيات", duration: "12:00", preview: false }
-          ]
-        },
-        {
-          title: "مراجعة نهائية وحل أسئلة",
-          lessons: [
-            { title: "مراجعة شاملة على الفصل كامل", duration: "20:00", preview: false },
-            { title: "حل أسئلة الكتاب المدرسي", duration: "18:00", preview: false },
-            { title: "حل أسئلة امتحانات ثانوية عامة سابقة", duration: "25:00", preview: false }
+            { title: "مراجعة شاملة على النواسخ", duration: "20:00", preview: false },
+            { title: "حل تمارين الكتاب المدرسي", duration: "22:00", preview: false },
+            { title: "نماذج امتحانات وتدريبات إعرابية", duration: "25:00", preview: false }
           ]
         }
       ],
       faq: [
-        {
-          question: "هل الكورس يغطي فصل الدعامة بالكامل؟",
-          answer: "أيوا، من أول تركيب العظام لآلية الانقباض العضلي لحد الدعامة في النبات — كل حاجة في الكتاب المدرسي مشروحة بالتفصيل."
-        },
-        {
-          question: "الرسومات التوضيحية مشروحة؟",
-          answer: "طبعاً. كل رسمة مطلوبة في الامتحان مشروحة خطوة بخطوة — الساركومير، العمود الفقري، المفاصل، وغيرهم."
-        },
-        {
-          question: "فيه حل أسئلة امتحانات؟",
-          answer: "أيوا، الكورس فيه حل لأسئلة امتحانات ثانوية عامة فعلية من سنوات سابقة على كل جزء من الفصل."
-        },
-        {
-          question: "الكورس مناسب لو أنا مبتدئ في المنهج؟",
-          answer: "100%. الشرح متدرج ومبسط من الصفر. مش محتاج تكون عارف حاجة قبل ما تبدأ."
-        },
-        {
-          question: "إزاي أوصل للكورس بعد الشراء؟",
-          answer: "بعد تأكيد الدفع على واتساب، هتوصلك بيانات الدخول (إيميل وباسورد) وتقدر تدخل الكورس من صفحته مباشرة."
-        }
+        { question: "الكورس مناسب لأولى اعدادي بس؟", answer: "أيوا، الكورس مصمم خصيصاً لمنهج الصف الأول الاعدادي — الترم الأول." },
+        { question: "فيه تمارين محلولة؟", answer: "طبعاً، فيه تمارين من الكتاب المدرسي ونماذج امتحانات محلولة بالتفصيل." },
+        { question: "إزاي أشتري الكورس؟", answer: "اضغط على زرار اشتري الآن وهيتفتحلك واتساب — بعد تأكيد الدفع هتوصلك بيانات الدخول." }
       ]
     },
     {
       id: 2,
-      title: "التكاثر واستمرارية الحياة — شرح كامل",
-      category: "التكاثر واستمرارية الحياة",
+      title: "النحو — المنصوبات (المفعول به والمفعول المطلق والمفعول لأجله)",
+      category: "اللغة العربية",
+      stageId: "preparatory",
+      gradeId: "grade-8",
+      subjectId: "arabic",
+      instructorId: "youssef-elsebae",
+      level: "Intermediate",
+      price: 150.00,
+      originalPrice: 250.00,
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2025-09-15",
+      language: "ar",
+      description: "شرح شامل لدروس المنصوبات في النحو العربي لطلاب الصف الثاني الاعدادي: المفعول به والمفعول المطلق والمفعول لأجله. يشمل القواعد والإعراب والتطبيقات.",
+      image: "og-image.png",
+      instructor: "مستر يوسف السبع",
+      tags: ["عربي", "نحو", "مفعول به", "مفعول مطلق", "مفعول لأجله", "تانية اعدادي", "منصوبات"],
+      driveUrl: "",
+      learningObjectives: [
+        "تعريف المفعول به وأنواعه (ظاهر ومستتر وجملة)",
+        "إعراب المفعول به في الجمل المختلفة",
+        "تعريف المفعول المطلق وأنواعه (مؤكد ومبين للنوع ومبين للعدد)",
+        "تعريف المفعول لأجله وشروط نصبه",
+        "التمييز بين المنصوبات الثلاثة في الجملة الفعلية",
+        "حل تمارين إعرابية شاملة من الكتاب المدرسي"
+      ],
+      curriculum: [
+        {
+          title: "المفعول به",
+          lessons: [
+            { title: "تعريف المفعول به وأنواعه", duration: "12:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "إعراب المفعول به — أمثلة تطبيقية", duration: "16:00", preview: false },
+            { title: "تمارين محلولة على المفعول به", duration: "18:00", preview: false }
+          ]
+        },
+        {
+          title: "المفعول المطلق والمفعول لأجله",
+          lessons: [
+            { title: "المفعول المطلق — تعريفه وأنواعه", duration: "14:00", preview: false },
+            { title: "المفعول لأجله — تعريفه وشروط نصبه", duration: "12:00", preview: false },
+            { title: "تمارين محلولة على المفعول المطلق والمفعول لأجله", duration: "20:00", preview: false }
+          ]
+        },
+        {
+          title: "مراجعة شاملة",
+          lessons: [
+            { title: "مقارنة بين المنصوبات الثلاثة", duration: "15:00", preview: false },
+            { title: "حل تمارين الكتاب المدرسي ونماذج امتحانات", duration: "25:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        { question: "الكورس لأي صف؟", answer: "الصف الثاني الاعدادي — الترم الأول." },
+        { question: "فيه تمارين من الكتاب المدرسي؟", answer: "أيوا، كل تمارين الكتاب محلولة بالتفصيل مع نماذج امتحانات إضافية." },
+        { question: "إزاي أتواصل لو عندي سؤال؟", answer: "ابعتلنا على واتساب وهنرد عليك في أسرع وقت." }
+      ]
+    },
+    {
+      id: 3,
+      title: "النحو — البدل وأنواعه والنعت",
+      category: "اللغة العربية",
+      stageId: "preparatory",
+      gradeId: "grade-9",
+      subjectId: "arabic",
+      instructorId: "youssef-elsebae",
+      level: "Intermediate",
+      price: 180.00,
+      originalPrice: 300.00,
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2025-10-01",
+      language: "ar",
+      description: "شرح تفصيلي لدرس البدل وأنواعه (مطابق، بعض من كل، اشتمال) ودرس النعت (حقيقي وسببي) لطلاب الصف الثالث الاعدادي. يشمل الإعراب والتمارين المحلولة.",
+      image: "og-image.png",
+      instructor: "مستر يوسف السبع",
+      tags: ["عربي", "نحو", "بدل", "نعت", "تالتة اعدادي", "توابع"],
+      driveUrl: "",
+      learningObjectives: [
+        "تعريف البدل وأنواعه الثلاثة (مطابق، بعض من كل، اشتمال)",
+        "إعراب البدل بأنواعه في الجمل المختلفة",
+        "تعريف النعت الحقيقي والنعت السببي",
+        "التمييز بين النعت والبدل في الجملة",
+        "حل تمارين إعرابية شاملة على التوابع",
+        "حل نماذج امتحانات الشهادة الاعدادية"
+      ],
+      curriculum: [
+        {
+          title: "البدل وأنواعه",
+          lessons: [
+            { title: "تعريف البدل — المفهوم والأنواع", duration: "10:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "البدل المطابق — أمثلة وإعراب", duration: "14:00", preview: false },
+            { title: "بدل بعض من كل وبدل اشتمال", duration: "16:00", preview: false },
+            { title: "تمارين محلولة على البدل", duration: "18:00", preview: false }
+          ]
+        },
+        {
+          title: "النعت (الحقيقي والسببي)",
+          lessons: [
+            { title: "النعت الحقيقي — تعريفه ومطابقته للمنعوت", duration: "12:00", preview: false },
+            { title: "النعت السببي — تعريفه وإعرابه", duration: "14:00", preview: false },
+            { title: "الفرق بين النعت والبدل", duration: "10:00", preview: false },
+            { title: "تمارين محلولة على النعت", duration: "16:00", preview: false }
+          ]
+        },
+        {
+          title: "مراجعة نهائية",
+          lessons: [
+            { title: "مراجعة شاملة على التوابع", duration: "20:00", preview: false },
+            { title: "حل نماذج امتحانات الشهادة الاعدادية", duration: "25:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        { question: "الكورس بيجهز للشهادة الاعدادية؟", answer: "أيوا، فيه نماذج امتحانات شهادة اعدادية محلولة بالتفصيل." },
+        { question: "محتاج أكون عارف التوابع من قبل؟", answer: "لا، الشرح بيبدأ من الصفر ومتدرج." },
+        { question: "فيه فيديوهات مجانية للمعاينة؟", answer: "أيوا، أول درس في كل قسم متاح للمعاينة المجانية." }
+      ]
+    },
+    {
+      id: 4,
+      title: "المادة وتركيبها — الذرة والجزيء والعنصر والمركب",
+      category: "العلوم",
+      stageId: "preparatory",
+      gradeId: "grade-7",
+      subjectId: "science",
+      instructorId: "mostafa-mahmoud",
       level: "Beginner",
-      price: 250.00,
-      originalPrice: 400.00,
+      price: 180.00,
+      originalPrice: 300.00,
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2025-09-10",
+      language: "ar",
+      description: "شرح تفصيلي لوحدة المادة وتركيبها من منهج العلوم للصف الأول الاعدادي: مفهوم الذرة، الجزيء، العنصر، والمركب. يشمل تجارب عملية وتمارين محلولة.",
+      image: "og-image.png",
+      instructor: "أ/ مصطفى محمود",
+      tags: ["علوم", "أولى اعدادي", "ذرة", "جزيء", "عنصر", "مركب", "مادة"],
+      driveUrl: "",
+      learningObjectives: [
+        "فهم مفهوم المادة وحالاتها الثلاث",
+        "التعرف على تركيب الذرة (بروتونات ونيوترونات وإلكترونات)",
+        "التمييز بين الذرة والجزيء",
+        "التمييز بين العنصر والمركب والمخلوط",
+        "فهم الجدول الدوري وتصنيف العناصر",
+        "حل تمارين الكتاب المدرسي وامتحانات سابقة"
+      ],
+      curriculum: [
+        {
+          title: "المادة وحالاتها",
+          lessons: [
+            { title: "ما هي المادة؟ — تعريف وحالات", duration: "10:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "الخواص الفيزيائية والكيميائية للمادة", duration: "14:00", preview: false },
+            { title: "التغيرات الفيزيائية والكيميائية", duration: "12:00", preview: false }
+          ]
+        },
+        {
+          title: "الذرة والجزيء",
+          lessons: [
+            { title: "تركيب الذرة — البروتونات والنيوترونات والإلكترونات", duration: "18:00", preview: false },
+            { title: "العدد الذري والعدد الكتلي", duration: "14:00", preview: false },
+            { title: "الجزيء — تعريفه وأمثلة", duration: "12:00", preview: false }
+          ]
+        },
+        {
+          title: "العنصر والمركب والمخلوط",
+          lessons: [
+            { title: "العنصر — التعريف والأمثلة والجدول الدوري", duration: "16:00", preview: false },
+            { title: "المركب — التعريف والفرق بينه وبين المخلوط", duration: "14:00", preview: false },
+            { title: "تجارب عملية وتمارين محلولة", duration: "20:00", preview: false }
+          ]
+        },
+        {
+          title: "مراجعة نهائية",
+          lessons: [
+            { title: "مراجعة شاملة على الوحدة", duration: "22:00", preview: false },
+            { title: "حل تمارين الكتاب المدرسي وامتحانات", duration: "25:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        { question: "الكورس لأي صف؟", answer: "الصف الأول الاعدادي — الترم الأول." },
+        { question: "فيه تجارب عملية؟", answer: "أيوا، التجارب المطلوبة في المنهج مشروحة بالتفصيل مع رسومات." },
+        { question: "الأستاذ مصطفى بيشرح إزاي؟", answer: "الشرح مبسط وتفصيلي مع أمثلة كتير وتمارين محلولة خطوة بخطوة." }
+      ]
+    },
+    {
+      id: 5,
+      title: "الصوت والضوء — خصائص الموجات الصوتية وانعكاس الضوء",
+      category: "العلوم",
+      stageId: "preparatory",
+      gradeId: "grade-8",
+      subjectId: "science",
+      instructorId: "mostafa-mahmoud",
+      level: "Intermediate",
+      price: 200.00,
+      originalPrice: 350.00,
+      students: 0,
+      lessons: 1,
+      rating: 0,
+      date: "2025-10-01",
+      language: "ar",
+      description: "شرح وحدة الصوت والضوء من منهج العلوم للصف الثاني الاعدادي: خصائص الموجات الصوتية، سرعة الصوت، انعكاس الضوء وانكساره، المرايا والعدسات.",
+      image: "og-image.png",
+      instructor: "أ/ مصطفى محمود",
+      tags: ["علوم", "تانية اعدادي", "صوت", "ضوء", "موجات", "مرايا", "عدسات", "انعكاس"],
+      driveUrl: "",
+      learningObjectives: [
+        "فهم خصائص الموجات الصوتية (التردد، الطول الموجي، السعة)",
+        "حساب سرعة الصوت في الأوساط المختلفة",
+        "فهم قوانين انعكاس الضوء",
+        "التمييز بين أنواع المرايا (مستوية، مقعرة، محدبة)",
+        "فهم انكسار الضوء وتطبيقاته في العدسات",
+        "حل مسائل رقمية وتمارين الكتاب المدرسي"
+      ],
+      curriculum: [
+        {
+          title: "الصوت وخصائصه",
+          lessons: [
+            { title: "ما هو الصوت؟ — الموجات الصوتية", duration: "12:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "خصائص الصوت — التردد والسعة والطول الموجي", duration: "16:00", preview: false },
+            { title: "سرعة الصوت في الأوساط المختلفة", duration: "14:00", preview: false },
+            { title: "مسائل محلولة على الصوت", duration: "18:00", preview: false }
+          ]
+        },
+        {
+          title: "الضوء وانعكاسه",
+          lessons: [
+            { title: "الضوء — تعريفه وخصائصه", duration: "10:00", preview: false },
+            { title: "قوانين الانعكاس — المرآة المستوية", duration: "16:00", preview: false },
+            { title: "المرآة المقعرة والمرآة المحدبة", duration: "18:00", preview: false },
+            { title: "تطبيقات المرايا في الحياة اليومية", duration: "12:00", preview: false }
+          ]
+        },
+        {
+          title: "انكسار الضوء والعدسات",
+          lessons: [
+            { title: "انكسار الضوء — القانون والتطبيقات", duration: "16:00", preview: false },
+            { title: "العدسات المحدبة والمقعرة", duration: "14:00", preview: false },
+            { title: "تكوين الصور في العدسات", duration: "16:00", preview: false }
+          ]
+        },
+        {
+          title: "مراجعة نهائية",
+          lessons: [
+            { title: "مراجعة شاملة — الصوت والضوء", duration: "22:00", preview: false },
+            { title: "حل مسائل وتمارين الكتاب المدرسي", duration: "25:00", preview: false }
+          ]
+        }
+      ],
+      faq: [
+        { question: "الكورس فيه مسائل رقمية؟", answer: "أيوا، فيه مسائل محلولة على سرعة الصوت وقوانين الانعكاس والانكسار." },
+        { question: "المرايا والعدسات مشروحة بالرسم؟", answer: "طبعاً، كل الرسومات المطلوبة مشروحة خطوة بخطوة." },
+        { question: "الكورس يكفي للامتحان؟", answer: "أيوا، بيغطي الوحدة كاملة مع تمارين وامتحانات." }
+      ]
+    },
+    {
+      id: 6,
+      title: "الكائنات الحية والبيئة — التكيف والتنوع البيولوجي",
+      category: "العلوم",
+      stageId: "primary",
+      gradeId: "grade-6",
+      subjectId: "science",
+      instructorId: "mostafa-mahmoud",
+      level: "Beginner",
+      price: 120.00,
+      originalPrice: 200.00,
       students: 0,
       lessons: 1,
       rating: 0,
       date: "2025-10-15",
       language: "ar",
-      description: "شرح شامل لفصل التكاثر من منهج الأحياء للثانوية العامة: التكاثر اللاجنسي والجنسي، دورة حياة بلازموديوم الملاريا، الجهاز التناسلي في الإنسان، مراحل تكوين الجنين، والهرمونات المنظمة للدورة الشهرية والحمل.",
+      description: "شرح مبسط لوحدة الكائنات الحية والبيئة من منهج العلوم للصف السادس الابتدائي: مفهوم التكيف، أنواع التكيف، التنوع البيولوجي، والسلاسل الغذائية.",
       image: "og-image.png",
-      instructor: "مستر محمد السيد",
-      tags: ["أحياء", "ثانوية عامة", "تكاثر", "جنسي", "لاجنسي", "جهاز تناسلي", "ملاريا", "جنين"],
+      instructor: "أ/ مصطفى محمود",
+      tags: ["علوم", "سادسة ابتدائي", "تكيف", "بيئة", "تنوع بيولوجي", "سلسلة غذائية"],
       driveUrl: "",
       learningObjectives: [
-        "التمييز بين صور التكاثر اللاجنسي المختلفة بالأمثلة",
-        "شرح دورة حياة بلازموديوم الملاريا بالتفصيل",
-        "فهم تركيب الجهاز التناسلي الذكري والأنثوي في الإنسان",
-        "شرح مراحل تكوين الحيوان المنوي والبويضة",
-        "تتبع مراحل تكوين الجنين من الإخصاب للولادة",
-        "فهم دور الهرمونات في تنظيم الدورة الشهرية والحمل"
+        "فهم مفهوم التكيف وأنواعه (تركيبي، سلوكي، وظيفي)",
+        "التعرف على أمثلة التكيف في الحيوانات والنباتات",
+        "فهم مفهوم التنوع البيولوجي وأهميته",
+        "رسم وفهم السلاسل والشبكات الغذائية",
+        "التعرف على العلاقات بين الكائنات الحية في البيئة",
+        "حل تمارين الكتاب المدرسي"
       ],
       curriculum: [
         {
-          title: "التكاثر اللاجنسي",
+          title: "التكيف",
           lessons: [
-            { title: "مقدمة — أهمية التكاثر واستمرارية النوع", duration: "07:00", preview: true, previewUrl: "https://www.youtube.com/embed/-8_uHf16TIk", previewThumb: "" },
-            { title: "صور التكاثر اللاجنسي — الانشطار والتبرعم والتجدد", duration: "15:00", preview: true, previewUrl: "https://www.youtube.com/embed/2_shSnYAJig", previewThumb: "" },
-            { title: "التكاثر بالأبواغ والتكاثر الخضري", duration: "12:00", preview: false }
+            { title: "ما هو التكيف؟ — مقدمة ومفاهيم أساسية", duration: "08:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "أنواع التكيف — تركيبي وسلوكي ووظيفي", duration: "14:00", preview: false },
+            { title: "أمثلة التكيف في الحيوانات والنباتات", duration: "16:00", preview: false }
           ]
         },
         {
-          title: "التكاثر الجنسي ودورة حياة الملاريا",
+          title: "التنوع البيولوجي والسلاسل الغذائية",
           lessons: [
-            { title: "التكاثر الجنسي — مفهومه وأهميته البيولوجية", duration: "10:00", preview: false },
-            { title: "دورة حياة بلازموديوم الملاريا — شرح تفصيلي بالرسم", duration: "22:00", preview: false },
-            { title: "التكاثر في النباتات الزهرية", duration: "16:00", preview: false }
+            { title: "التنوع البيولوجي — ماذا يعني ولماذا مهم؟", duration: "12:00", preview: false },
+            { title: "السلسلة الغذائية — المنتج والمستهلك والمحلل", duration: "14:00", preview: false },
+            { title: "الشبكة الغذائية — أمثلة ورسومات", duration: "12:00", preview: false }
           ]
         },
         {
-          title: "التكاثر في الإنسان",
+          title: "مراجعة وتمارين",
           lessons: [
-            { title: "الجهاز التناسلي الذكري — التركيب والوظيفة", duration: "18:00", preview: false },
-            { title: "الجهاز التناسلي الأنثوي — التركيب والوظيفة", duration: "18:00", preview: false },
-            { title: "تكوين الحيوانات المنوية والبويضات", duration: "15:00", preview: false },
-            { title: "الدورة الشهرية ودور الهرمونات", duration: "16:00", preview: false }
-          ]
-        },
-        {
-          title: "الإخصاب وتكوين الجنين",
-          lessons: [
-            { title: "الإخصاب والانغراس — من البويضة المخصبة للجنين", duration: "14:00", preview: false },
-            { title: "مراحل تكوين الجنين والأغشية الجنينية", duration: "16:00", preview: false },
-            { title: "الولادة والرضاعة ودور الهرمونات", duration: "10:00", preview: false }
-          ]
-        },
-        {
-          title: "مراجعة نهائية وحل أسئلة",
-          lessons: [
-            { title: "مراجعة شاملة على الفصل كامل", duration: "22:00", preview: false },
-            { title: "حل أسئلة الكتاب المدرسي", duration: "18:00", preview: false },
-            { title: "حل أسئلة امتحانات ثانوية عامة سابقة", duration: "28:00", preview: false }
+            { title: "مراجعة شاملة على الوحدة", duration: "16:00", preview: false },
+            { title: "حل تمارين الكتاب المدرسي", duration: "20:00", preview: false }
           ]
         }
       ],
       faq: [
-        {
-          question: "هل دورة حياة الملاريا مشروحة بالرسم؟",
-          answer: "أيوا، الدورة مشروحة خطوة بخطوة مع رسم تفصيلي وتوضيح لكل مرحلة — من القرصة لحد ظهور الأعراض."
-        },
-        {
-          question: "الكورس بيغطي الجهاز التناسلي بالكامل؟",
-          answer: "بالكامل — الذكري والأنثوي، تكوين الأمشاج، الدورة الشهرية، الإخصاب، وتكوين الجنين. كل حاجة مطلوبة في المنهج."
-        },
-        {
-          question: "فيه مقارنات جاهزة بين التكاثر الجنسي واللاجنسي؟",
-          answer: "أيوا، كل المقارنات المهمة مجمعة ومشروحة بشكل واضح ومرتب."
-        },
-        {
-          question: "ممكن أشترك في كورس واحد بس؟",
-          answer: "طبعاً! تقدر تشتري أي كورس لوحده. أو تتواصل معانا لو عايز عرض على أكتر من كورس."
-        },
-        {
-          question: "بعد الشراء أقدر أرجع أتفرج تاني؟",
-          answer: "أيوا، وصولك مدى الحياة. تقدر ترجع تتفرج أي عدد مرات من أي جهاز."
-        }
+        { question: "الكورس مناسب لسادسة ابتدائي؟", answer: "أيوا، مصمم خصيصاً لمنهج الصف السادس الابتدائي بأسلوب مبسط ومناسب للسن." },
+        { question: "الشرح سهل؟", answer: "طبعاً، الشرح بسيط ومتدرج مع رسومات وأمثلة من الحياة اليومية." },
+        { question: "فيه رسومات للسلاسل الغذائية؟", answer: "أيوا، كل السلاسل والشبكات الغذائية مرسومة ومشروحة بالتفصيل." }
       ]
     },
     {
-      id: 3,
-      title: "التنسيق الهرموني والعصبي — شرح كامل",
-      category: "التنسيق الهرموني والعصبي",
-      level: "Intermediate",
-      price: 250.00,
-      originalPrice: 400.00,
+      id: 7,
+      title: "النحو — أنواع الجموع (مذكر سالم ومؤنث سالم وتكسير)",
+      category: "اللغة العربية",
+      stageId: "primary",
+      gradeId: "grade-5",
+      subjectId: "arabic",
+      instructorId: "youssef-elsebae",
+      level: "Beginner",
+      price: 120.00,
+      originalPrice: 200.00,
       students: 0,
       lessons: 1,
       rating: 0,
       date: "2025-11-01",
       language: "ar",
-      description: "شرح وافي لفصل التنسيق الهرموني من منهج الأحياء للثانوية العامة: جهاز الغدد الصماء في الإنسان، الغدة النخامية والدرقية والبنكرياس والكظرية، الهرمونات ووظائفها، أمراض الخلل الهرموني، والهرمونات النباتية (الأوكسينات).",
+      description: "شرح مبسط لأنواع الجموع في اللغة العربية لطلاب الصف الخامس الابتدائي: جمع المذكر السالم وجمع المؤنث السالم وجمع التكسير — مع الإعراب والتمارين.",
       image: "og-image.png",
-      instructor: "مستر محمد السيد",
-      tags: ["أحياء", "ثانوية عامة", "هرمونات", "غدد صماء", "نخامية", "درقية", "بنكرياس", "أوكسينات"],
+      instructor: "مستر يوسف السبع",
+      tags: ["عربي", "نحو", "جمع مذكر سالم", "جمع مؤنث سالم", "جمع تكسير", "خامسة ابتدائي"],
       driveUrl: "",
       learningObjectives: [
-        "فهم الفرق بين الغدد الصماء والغدد القنوية والمشتركة",
-        "شرح وظائف الغدة النخامية — الفص الأمامي والخلفي",
-        "تحليل دور هرمونات الغدة الدرقية والبنكرياس في اتزان الجسم",
-        "التمييز بين أمراض زيادة ونقص الهرمونات",
-        "فهم الهرمونات النباتية (الأوكسينات) ودورها في النمو",
-        "حل أسئلة علِّل وقارن والرسومات المطلوبة في الامتحان"
+        "التعرف على أنواع الجمع الثلاثة",
+        "تعريف جمع المذكر السالم وعلامات إعرابه",
+        "تعريف جمع المؤنث السالم وعلامات إعرابه",
+        "تعريف جمع التكسير وأمثلة عليه",
+        "التمييز بين أنواع الجمع في الجمل",
+        "حل تمارين إعرابية بسيطة من الكتاب المدرسي"
       ],
       curriculum: [
         {
-          title: "مقدمة في التنسيق الهرموني",
+          title: "أنواع الجمع",
           lessons: [
-            { title: "ما هو التنسيق الهرموني؟ — مقدمة ومفاهيم أساسية", duration: "08:00", preview: true, previewUrl: "https://www.youtube.com/embed/z2CRb1AYdwI", previewThumb: "" },
-            { title: "أنواع الغدد — صماء وقنوية ومشتركة", duration: "12:00", preview: true, previewUrl: "https://www.youtube.com/embed/QmMZFMdai-g", previewThumb: "" },
-            { title: "العلاقة بين الجهاز العصبي والهرموني", duration: "10:00", preview: false }
+            { title: "مقدمة — المفرد والمثنى والجمع", duration: "08:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "جمع المذكر السالم — تعريفه وإعرابه", duration: "14:00", preview: false },
+            { title: "جمع المؤنث السالم — تعريفه وإعرابه", duration: "14:00", preview: false },
+            { title: "جمع التكسير — تعريفه وأمثلة", duration: "12:00", preview: false }
           ]
         },
         {
-          title: "الغدة النخامية والغدة الدرقية",
+          title: "تمارين ومراجعة",
           lessons: [
-            { title: "الغدة النخامية — سيدة الغدد الصماء", duration: "20:00", preview: false },
-            { title: "هرمونات الفص الأمامي والخلفي للنخامية", duration: "16:00", preview: false },
-            { title: "الغدة الدرقية — الثيروكسين ونقصه وزيادته", duration: "18:00", preview: false },
-            { title: "الغدة الجار درقية — الكالسيتونين والباراثورمون", duration: "12:00", preview: false }
-          ]
-        },
-        {
-          title: "غدد الجسم الأخرى",
-          lessons: [
-            { title: "البنكرياس — الأنسولين والجلوكاجون وتنظيم سكر الدم", duration: "18:00", preview: false },
-            { title: "الغدة الكظرية — الأدرينالين والكورتيزول", duration: "14:00", preview: false },
-            { title: "الغدة الصنوبرية والتيموسية", duration: "10:00", preview: false },
-            { title: "الغدد التناسلية وهرموناتها", duration: "12:00", preview: false }
-          ]
-        },
-        {
-          title: "الهرمونات النباتية",
-          lessons: [
-            { title: "الأوكسينات — اكتشافها ودورها في النمو والانتحاء", duration: "14:00", preview: false },
-            { title: "تطبيقات الهرمونات النباتية", duration: "08:00", preview: false }
-          ]
-        },
-        {
-          title: "مراجعة نهائية وحل أسئلة",
-          lessons: [
-            { title: "مراجعة شاملة — كل الغدد والهرمونات في جدول واحد", duration: "22:00", preview: false },
-            { title: "حل أسئلة الكتاب المدرسي", duration: "18:00", preview: false },
-            { title: "حل أسئلة امتحانات ثانوية عامة سابقة", duration: "28:00", preview: false }
+            { title: "التمييز بين أنواع الجمع — تمارين تفاعلية", duration: "16:00", preview: false },
+            { title: "حل تمارين الكتاب المدرسي", duration: "20:00", preview: false },
+            { title: "مراجعة شاملة ونماذج امتحانات", duration: "18:00", preview: false }
           ]
         }
       ],
       faq: [
-        {
-          question: "ليه فصل الهرمونات بيتقال عليه صعب؟",
-          answer: "لأن فيه تفاصيل كتير وغدد وهرمونات بأسماء متشابهة. عشان كده الكورس بيشرح كل غدة لوحدها بالترتيب، ومع جداول مقارنة بتسهل الحفظ والفهم."
-        },
-        {
-          question: "هل الكورس فيه جداول ملخصة للغدد والهرمونات؟",
-          answer: "أيوا، فيه جدول شامل بكل الغدد ومكانها وهرموناتها ووظائفها وأمراض الخلل — مجمع في مراجعة نهائية."
-        },
-        {
-          question: "الهرمونات النباتية داخلة في الكورس؟",
-          answer: "طبعاً. الأوكسينات مشروحة بالكامل — اكتشافها ودورها في الانتحاء والتطبيقات العملية."
-        },
-        {
-          question: "أقدر أسأل لو في حاجة مش فاهمها؟",
-          answer: "أيوا، ابعتلنا على واتساب وهنرد عليك. التواصل المباشر مع المدرس متاح لكل الطلاب."
-        },
-        {
-          question: "لو اشتريت الكورس ده بس، هيكفيني للامتحان؟",
-          answer: "الكورس بيغطي فصل التنسيق الهرموني بالكامل. لو عايز تغطي المنهج كله، شوف باقي الكورسات أو تواصل معانا لعرض خاص."
-        }
+        { question: "الكورس لأي صف؟", answer: "الصف الخامس الابتدائي." },
+        { question: "أسلوب الشرح مناسب للأطفال؟", answer: "أيوا، الشرح مبسط جداً ومناسب لسن المرحلة الابتدائية مع أمثلة سهلة." },
+        { question: "فيه تمارين؟", answer: "طبعاً، كل تمارين الكتاب المدرسي محلولة مع نماذج إضافية." }
       ]
     },
     {
-      id: 4,
-      title: "البيولوجيا الجزيئية والتكنولوجيا الحيوية — شرح كامل",
-      category: "البيولوجيا الجزيئية والتكنولوجيا الحيوية",
+      id: 8,
+      title: "الوراثة — قوانين مندل والصفات السائدة والمتنحية",
+      category: "العلوم",
+      stageId: "preparatory",
+      gradeId: "grade-9",
+      subjectId: "science",
+      instructorId: "mostafa-mahmoud",
       level: "Advanced",
-      price: 300.00,
-      originalPrice: 500.00,
+      price: 200.00,
+      originalPrice: 350.00,
       students: 0,
       lessons: 1,
       rating: 0,
-      date: "2025-12-01",
+      date: "2025-11-15",
       language: "ar",
-      description: "شرح متكامل للباب الثاني من منهج الأحياء للثانوية العامة: تركيب DNA ونموذج واطسون وكريك، التضاعف، الطفرات الجينية، RNA وأنواعه، الشفرة الوراثية، خطوات بناء البروتين، الهندسة الوراثية، والجينوم البشري.",
+      description: "شرح شامل لوحدة الوراثة من منهج العلوم للصف الثالث الاعدادي: قوانين مندل في الوراثة، الصفات السائدة والمتنحية، التهجين الأحادي والثنائي، والأمراض الوراثية.",
       image: "og-image.png",
-      instructor: "مستر محمد السيد",
-      tags: ["أحياء", "ثانوية عامة", "DNA", "RNA", "بروتين", "وراثة", "هندسة وراثية", "جينوم", "بيولوجيا جزيئية"],
+      instructor: "أ/ مصطفى محمود",
+      tags: ["علوم", "تالتة اعدادي", "وراثة", "مندل", "صفات سائدة", "صفات متنحية", "تهجين"],
       driveUrl: "",
       learningObjectives: [
-        "فهم تركيب الحمض النووي DNA ونموذج واطسون وكريك",
-        "شرح خطوات تضاعف DNA في أوليات وحقيقيات النواة",
-        "التمييز بين أنواع الطفرات الجينية وتأثيراتها",
-        "شرح أنواع RNA الثلاثة ودور كل منها في بناء البروتين",
-        "تتبع خطوات بناء البروتين من النسخ للترجمة",
-        "فهم أساسيات الهندسة الوراثية ومشروع الجينوم البشري"
+        "فهم تجارب مندل على نبات البازلاء",
+        "شرح قانون مندل الأول (قانون انعزال الصفات)",
+        "شرح قانون مندل الثاني (قانون التوزيع الحر)",
+        "التمييز بين الصفات السائدة والمتنحية",
+        "حل مسائل التهجين الأحادي والثنائي",
+        "التعرف على بعض الأمراض الوراثية وكيفية انتقالها"
       ],
       curriculum: [
         {
-          title: "الحمض النووي DNA",
+          title: "مقدمة في الوراثة وتجارب مندل",
           lessons: [
-            { title: "مقدمة — المادة الوراثية وإثبات أن DNA هو حامل الصفات", duration: "12:00", preview: true, previewUrl: "PREVIEW_URL_4_0_0", previewThumb: "" },
-            { title: "تركيب DNA — نموذج واطسون وكريك بالتفصيل", duration: "20:00", preview: true, previewUrl: "PREVIEW_URL_4_0_1", previewThumb: "" },
-            { title: "تضاعف DNA — الخطوات والإنزيمات", duration: "22:00", preview: false },
-            { title: "الفرق بين التضاعف في أوليات وحقيقيات النواة", duration: "14:00", preview: false }
+            { title: "ما هي الوراثة؟ — مفاهيم أساسية", duration: "10:00", preview: true, previewUrl: "", previewThumb: "" },
+            { title: "تجارب مندل على نبات البازلاء", duration: "18:00", preview: false },
+            { title: "المصطلحات الوراثية — الجين والأليل والطراز", duration: "14:00", preview: false }
           ]
         },
         {
-          title: "الطفرات الجينية",
+          title: "قوانين مندل",
           lessons: [
-            { title: "أنواع الطفرات — الاستبدال والإضافة والحذف", duration: "16:00", preview: false },
-            { title: "تأثير الطفرات على البروتين والصفات", duration: "12:00", preview: false },
-            { title: "المطفرات وأمثلة على الأمراض الوراثية", duration: "10:00", preview: false }
+            { title: "قانون مندل الأول — انعزال الصفات", duration: "16:00", preview: false },
+            { title: "قانون مندل الثاني — التوزيع الحر", duration: "18:00", preview: false },
+            { title: "الصفات السائدة والمتنحية — أمثلة", duration: "14:00", preview: false }
           ]
         },
         {
-          title: "RNA وتخليق البروتين",
+          title: "التهجين والمسائل الوراثية",
           lessons: [
-            { title: "أنواع RNA الثلاثة — mRNA و tRNA و rRNA", duration: "14:00", preview: false },
-            { title: "الشفرة الوراثية — خصائصها وجدول الكودونات", duration: "16:00", preview: false },
-            { title: "النسخ (Transcription) — من DNA إلى mRNA", duration: "18:00", preview: false },
-            { title: "الترجمة (Translation) — من mRNA إلى بروتين", duration: "22:00", preview: false }
+            { title: "التهجين الأحادي — مسائل محلولة", duration: "20:00", preview: false },
+            { title: "التهجين الثنائي — مسائل محلولة", duration: "22:00", preview: false },
+            { title: "الأمراض الوراثية — أنيميا الخلايا المنجلية وعمى الألوان", duration: "16:00", preview: false }
           ]
         },
         {
-          title: "الهندسة الوراثية والجينوم",
+          title: "مراجعة نهائية",
           lessons: [
-            { title: "أساسيات الهندسة الوراثية — الأدوات والخطوات", duration: "16:00", preview: false },
-            { title: "تطبيقات الهندسة الوراثية في الطب والزراعة", duration: "12:00", preview: false },
-            { title: "مشروع الجينوم البشري — أهدافه ونتائجه", duration: "10:00", preview: false }
-          ]
-        },
-        {
-          title: "مراجعة نهائية وحل أسئلة",
-          lessons: [
-            { title: "مراجعة شاملة — DNA و RNA وبناء البروتين", duration: "25:00", preview: false },
-            { title: "حل أسئلة الكتاب المدرسي", duration: "20:00", preview: false },
-            { title: "حل أسئلة امتحانات ثانوية عامة سابقة", duration: "30:00", preview: false }
+            { title: "مراجعة شاملة على الوراثة", duration: "22:00", preview: false },
+            { title: "حل تمارين الكتاب ونماذج الشهادة الاعدادية", duration: "28:00", preview: false }
           ]
         }
       ],
       faq: [
-        {
-          question: "البيولوجيا الجزيئية صعبة. الكورس مناسب لو مستواي مبتدئ؟",
-          answer: "الشرح بيبدأ من الصفر — من إثبات إن DNA هو المادة الوراثية لحد الهندسة الوراثية. كل خطوة متشرحة بالرسومات والأمثلة."
-        },
-        {
-          question: "الرسومات الخاصة بـ DNA والبروتين مشروحة؟",
-          answer: "أيوا، كل الرسومات المطلوبة في الامتحان — تركيب DNA، التضاعف، النسخ، الترجمة — كلها مشروحة بالتفصيل."
-        },
-        {
-          question: "فيه شرح للهندسة الوراثية والجينوم؟",
-          answer: "طبعاً. الكورس بيغطي أساسيات الهندسة الوراثية وتطبيقاتها ومشروع الجينوم البشري — كل اللي مطلوب في الكتاب المدرسي."
-        },
-        {
-          question: "إيه الفرق بين الكورس ده وفصل الهرمونات؟",
-          answer: "فصل الهرمونات في الباب الأول (التركيب والوظيفة). البيولوجيا الجزيئية هي الباب الثاني كامل — DNA و RNA وبناء البروتين والهندسة الوراثية."
-        },
-        {
-          question: "لو عايز أشتري كل الكورسات مع بعض، فيه عرض؟",
-          answer: "أيوا! تواصل معانا على واتساب وهنعملك عرض خاص على الباقة الكاملة (٤ كورسات) بخصم كبير."
-        }
+        { question: "الكورس مهم للشهادة الاعدادية؟", answer: "أيوا جداً، الوراثة من أهم الوحدات في امتحان الشهادة الاعدادية." },
+        { question: "فيه مسائل تهجين محلولة؟", answer: "أيوا، فيه مسائل تهجين أحادي وثنائي كتير محلولة خطوة بخطوة." },
+        { question: "محتاج أعرف حاجة قبل الكورس؟", answer: "لا، الشرح بيبدأ من المفاهيم الأساسية." }
       ]
     }
   ];
 
-  /* ── Categories ── */
+  /* ── Categories (backward-compatible alias from subjects) ── */
 
-  var categories = {
-    "الدعامة والحركة في الكائنات الحية":      { color: "emerald" },
-    "التكاثر واستمرارية الحياة":              { color: "teal" },
-    "التنسيق الهرموني والعصبي":              { color: "cyan" },
-    "البيولوجيا الجزيئية والتكنولوجيا الحيوية": { color: "emerald" }
-  };
+  var categories = {};
+  subjects.forEach(function (s) { categories[s.name] = { color: s.color }; });
 
   /* ── Brand Constants ── */
 
-  var WHATSAPP_NUMBER = "201008464341";
-  var BRAND_NAME      = "مستر محمد السيد";
-  var DOMAIN          = "mrmohamedelsayed.com";
+  var WHATSAPP_NUMBER = "201100343552";
+  var BRAND_NAME      = "سنتر الأنوار المحمدية التعليمي";
+  var DOMAIN          = "amr-abd-elsalam.github.io/alanwar.edu";
 
   /* ── Auto-derive lesson count from curriculum ── */
 
@@ -414,6 +591,10 @@ var COURSE_DATA = (function () {
   /* ── Freeze and Export ── */
 
   return deepFreeze({
+    stages:          stages,
+    grades:          grades,
+    subjects:        subjects,
+    instructors:     instructors,
     courses:         courses,
     categories:      categories,
     WHATSAPP_NUMBER: WHATSAPP_NUMBER,
@@ -422,43 +603,36 @@ var COURSE_DATA = (function () {
 
     META: {
       /* ── SEO / Branding ── */
-      tagline:          'مستر محمد السيد — أستاذ الأحياء للثانوية العامة',
-      description:      'منصة مستر محمد السيد لتعليم مادة الأحياء لطلاب الثانوية العامة (الصف الثالث الثانوي — شعبة علمي علوم) في مصر. شرح تفصيلي لكل فصول المنهج مع رسومات توضيحية محلولة وأسئلة امتحانات سابقة. وصول مدى الحياة ودعم مباشر من المدرس عبر واتساب.',
-      descriptionShort: 'منصة مستر محمد السيد — شرح أحياء الثانوية العامة بالتفصيل مع أسئلة محلولة ودعم مباشر.',
+      tagline:          'سنتر الأنوار المحمدية التعليمي — ابتدائي واعدادي',
+      description:      'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية في كل المواد: عربي، علوم، رياضيات، انجليزي، دراسات، وبرمجة. شرح تفصيلي من أفضل المدرسين مع دعم مباشر عبر واتساب.',
+      descriptionShort: 'سنتر الأنوار المحمدية — كورسات أونلاين ابتدائي واعدادي مع أفضل المدرسين.',
       ogImage:          '/assets/img/og-image.png',
-      supportEmail:     'mrmohamedelsayed@gmail.com',
+      supportEmail:     'adhamemad36599@gmail.com',
       foundingYear:     '2025',
       logoPath:         '/assets/img/fav180.png',
       legalLastUpdated: '2026-03-10',
 
       /* ── WhatsApp ── */
-      whatsappDefaultMessage: 'مرحباً يا مستر! عندي سؤال عن الكورسات.',
+      whatsappDefaultMessage: 'مرحباً! عندي سؤال عن كورسات سنتر الأنوار المحمدية.',
 
       /* ── Chat Widget ── */
-      chatBotName:        'مساعد مستر محمد',
-      chatWelcomeMessage: 'أهلاً بيك! أنا هنا عشان أساعدك بأي سؤال عن الكورس. اسألني أي حاجة!',
+      chatBotName:        'مساعد سنتر الأنوار',
+      chatWelcomeMessage: 'أهلاً بيك! أنا هنا عشان أساعدك بأي سؤال عن الكورسات. اسألني أي حاجة!',
       chatPlaceholder:    'اكتب سؤالك هنا...',
       chatErrorMessage:   'حصل مشكلة في الاتصال. جرّب تاني.',
 
-      /* ── White-label UI Strings ──
-         These strings contain brand-specific or subject-specific text
-         that was previously hardcoded in page controllers.
-         Moving them here enables white-label customization via
-         COURSE_DATA alone without editing JS controllers.
-      */
-
       /* Hero section (index.html) */
-      heroLine1:    'افهم الأحياء صح،',
-      heroLine2:    'وحقق أعلى الدرجات.',
-      heroSubtitle: 'شرح تفصيلي لمنهج الأحياء للثانوية العامة — من الدعامة والحركة للبيولوجيا الجزيئية. رسومات توضيحية، أسئلة محلولة، ودعم مباشر من المدرس.',
-      heroBadge:    'أحياء الثانوية العامة — شرح تفصيلي',
+      heroLine1:    'تعليم أفضل لأولادك،',
+      heroLine2:    'من أفضل المدرسين.',
+      heroSubtitle: 'كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية — عربي، علوم، رياضيات، انجليزي، ودراسات. شرح تفصيلي من مدرسين متخصصين ودعم مباشر عبر واتساب.',
+      heroBadge:    'سنتر الأنوار المحمدية — ابتدائي واعدادي',
 
       /* CTA section (index.html) */
-      ctaTitle:    'مستعد تفهم الأحياء صح؟',
-      ctaSubtitle: 'كورسات شاملة لكل فصول المنهج — شرح مبسط، رسومات محلولة، وأسئلة امتحانات. ابدأ النهارده واستعد لامتحان الثانوية العامة.',
+      ctaTitle:    'مستعد تبدأ رحلة التفوق؟',
+      ctaSubtitle: 'كورسات شاملة لكل المواد والصفوف — شرح مبسط من أفضل المدرسين، تمارين محلولة، ودعم مباشر. سجّل النهارده وابدأ فوراً.',
 
       /* Footer tagline (all pages) */
-      footerTagline: 'شرح مادة الأحياء للثانوية العامة بأسلوب مبسط وتفصيلي. وصول مدى الحياة ودعم مباشر من المدرس.',
+      footerTagline: 'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب الابتدائي والاعدادي. شرح تفصيلي ودعم مباشر.',
 
       /* Course level labels (English key → Arabic display) */
       levels: {
@@ -473,7 +647,7 @@ var COURSE_DATA = (function () {
       emptyStateText:  'جرّب تغيّر الفلاتر أو كلمة البحث',
       resetFiltersLabel: 'إعادة ضبط الفلاتر',
 
-      /* Catalog results format: used with U.formatNumberAr */
+      /* Catalog results format */
       resultsTemplate: 'عرض {start}\u2013{end} من {total} نتيجة',
 
       /* Course details section titles */
@@ -487,43 +661,38 @@ var COURSE_DATA = (function () {
       ratingLoading:     'جاري تحميل التقييمات...',
       ratingEmpty:       'مفيش تقييمات لسه — كن أول من يقيّم!',
       ratingSubmitting:  'جاري إرسال تقييمك...',
-      ratingSuccess:     'شكراً لتقييمك! \u2764',
-      ratingError:       'حصل مشكلة. جرّب تاني.',
-      ratingUnavailable: 'نظام التقييم غير متاح حالياً',
+      ratingSuccess:     'شكراً لتقييمك! رأيك بيساعدنا نحسّن.',
+      ratingDuplicate:   'أنت قيّمت الكورس ده قبل كده. شكراً!',
+      ratingError:       'حصل مشكلة. جرّب تاني بعد شوية.',
 
-      /* Price formatting */
+      /* Copyright */
+      copyrightTemplate: '© {year} {brand}. جميع الحقوق محفوظة.',
+
+      /* Currency */
       currencyLabel: 'ج.م',
       freeLabel:     'مجاني',
 
-      /* Navigation labels */
-      navHome:     'الرئيسية',
-      navCourses:  'الكورسات',
-      navAbout:    'عن المدرس',
-      navBrowseAll: 'تصفح الكل',
-
-      /* Shared button / action labels */
+      /* Course card / details buttons */
       viewCourse:    'عرض الكورس',
       buyCourse:     'اشتري الآن',
-      startLearning: 'ابدأ التعلم الآن',
       enterCourse:   'اشتريت الكورس\u061F ادخل هنا \u{1F511}',
+      startLearning: 'ابدأ التعلم الآن',
       backToCourses: 'العودة للكورسات',
-      contactWhatsApp: 'تواصل على واتساب',
+
+      /* Navigation */
+      navHome:    'الرئيسية',
+      navCourses: 'الكورسات',
 
       /* Error page */
-      errorTitle: 'الكورس غير موجود',
-      errorText:  'الكورس اللي بتدور عليه مش موجود. ممكن يكون اتحذف أو الرابط غلط.',
+      errorTitle:  'الكورس غير موجود',
+      errorText:   'الكورس اللي بتدور عليه مش موجود. ممكن يكون اتحذف أو الرابط غلط.',
       errorBrowse: 'تصفح الكورسات',
 
-      /* Copyright template — {year} and {brand} are replaced at runtime */
-      copyrightTemplate: '© {year} {brand}. جميع الحقوق محفوظة.',
-
-      previewPlayLabel: 'اضغط للمعاينة المجانية',
-      previewCloseLabel: 'إغلاق المعاينة',
+      /* Preview */
+      previewPlayLabel:       'اضغط للمعاينة المجانية',
       previewFullscreenLabel: 'ملء الشاشة',
-      previewExitFullscreenLabel: 'خروج من ملء الشاشة'
+      previewCloseLabel:      'إغلاق المعاينة'
     }
   });
 
 })();
-
-if (typeof window !== 'undefined') window.COURSE_DATA = COURSE_DATA;

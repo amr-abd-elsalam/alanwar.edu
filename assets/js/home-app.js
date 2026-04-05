@@ -35,10 +35,12 @@
   var FEATURED_COUNT = 3;
 
   var CATEGORY_ICONS = {
-    'الدعامة والحركة في الكائنات الحية':        'bi-activity',
-    'التكاثر واستمرارية الحياة':                'bi-heart-pulse-fill',
-    'التنسيق الهرموني والعصبي':                'bi-lightning-charge-fill',
-    'البيولوجيا الجزيئية والتكنولوجيا الحيوية':  'bi-virus2'
+    'اللغة العربية':                  'bi-book',
+    'العلوم':                         'bi-virus2',
+    'الرياضيات':                      'bi-calculator',
+    'اللغة الإنجليزية':                'bi-translate',
+    'الدراسات الاجتماعية':             'bi-globe-americas',
+    'البرمجة وتكنولوجيا المعلومات':    'bi-code-slash'
   };
 
   /* ── Path Constants (relative from /) ── */
