@@ -1722,7 +1722,8 @@
   ══════════════════════════════════════ */
 
   function _initFooter() {
-    SP.buildWhatsAppLinks(['footer-whatsapp-link']);
+    SP.buildWhatsAppLinks(['footer-whatsapp-link', 'footer-wa-link-2']);
+    SP.buildEmailLinks();
     SP.buildFooterCategories('../');
     SP.buildFooter();
   }

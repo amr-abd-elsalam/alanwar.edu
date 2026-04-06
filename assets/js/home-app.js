@@ -342,7 +342,8 @@ function buildStats() {
     buildFeaturedCourses();
     buildCategories();
     buildWhatsAppCTA();
-    SP.buildWhatsAppLinks(['footer-whatsapp-link']);
+    SP.buildWhatsAppLinks(['footer-whatsapp-link', 'footer-wa-link-2']);
+    SP.buildEmailLinks();
     SP.buildFooterCategories(COURSE_BASE);
     SP.buildFooter();
     U.announce(U.formatNumberAr(DATA.courses.length) + ' كورس متاح');

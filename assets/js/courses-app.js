@@ -742,9 +742,10 @@
     var p = new URLSearchParams(location.search);
     if (!p.toString()) return;
 
-    /* Categories */
-    var cats = (p.get('categories') || '').split(',').filter(function (c) {
-      return VALID_CATEGORIES.indexOf(c) !== -1;
+    /* Categories — support both ?categories= (canonical) and ?category= (from buildCatalogUrl) */
+    var rawCats = p.get('categories') || p.get('category') || '';
+    var cats = rawCats.split(',').filter(function (c) {
+      return c && VALID_CATEGORIES.indexOf(c) !== -1;
     });
     if (cats.length && state.filtersEl) {
       U.qsa('input[data-filter="category"]', state.filtersEl).forEach(function (cb) {
@@ -990,7 +991,8 @@
     readURL();
     bindEvents();
     render(false);
-    SP.buildWhatsAppLinks(['footer-whatsapp-link']);
+    SP.buildWhatsAppLinks(['footer-whatsapp-link', 'footer-wa-link-2']);
+    SP.buildEmailLinks();
     SP.buildFooterCategories('./');
     SP.buildFooter();
   }
