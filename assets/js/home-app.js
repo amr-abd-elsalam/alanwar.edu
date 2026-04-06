@@ -163,7 +163,7 @@ function buildStats() {
     );
   });
 
-  container.innerHTML = '';   /* ← مسح الـ skeleton placeholders أولاً */
+  while (container.firstChild) container.removeChild(container.firstChild);
   container.appendChild(frag);
 }
 

@@ -53,7 +53,7 @@
     errorMessage:   META.chatErrorMessage   || 'حصل مشكلة في الاتصال. جرّب تاني.',
     maxMessageLen:  500,
     maxHistory:     20,
-    storagePrefix:  'mrelsayed_chat_',
+    storagePrefix:  'alanwar_chat_',
     timeoutMs:      35000
   });
 
@@ -1091,7 +1091,7 @@
     var metaList = U.el('ul', { className: 'course-meta-list' });
 
     metaList.appendChild(_buildMetaItem('bi-person-fill',    'المدرّس',    course.instructor));
-    metaList.appendChild(_buildMetaItem('bi-tag-fill',       'الفصل',     course.category));
+    metaList.appendChild(_buildMetaItem('bi-tag-fill',       'المادة',    course.category));
     metaList.appendChild(_buildMetaItem('bi-bar-chart-fill', 'المستوى',   getLevelLabel(course.level)));
     metaList.appendChild(_buildMetaItem('bi-people-fill',    'الطلاب',    U.formatNumberAr(course.students)));
     metaList.appendChild(_buildMetaItem('bi-book-fill',      'الدروس',    U.formatNumberAr(course.lessons)));

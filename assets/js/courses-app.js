@@ -310,7 +310,7 @@
   ══════════════════════════════════════ */
 
   function _buildCategoryFilters(root) {
-    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'الفصول' }));
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'المواد' }));
     var catList   = U.el('div', { className: 'filter-group', id: 'category-filter-list' });
     var allCounts = countCategories(DATA.courses);
 
