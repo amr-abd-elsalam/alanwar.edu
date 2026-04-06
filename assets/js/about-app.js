@@ -92,6 +92,66 @@
     SP.setTextById('about-stat-instructors', U.formatNumberAr(DATA.instructors.length) + '+');
   }
 
+  /* ── Helpers ── */
+
+  function _findSubject(subjectId) {
+    for (var i = 0; i < DATA.subjects.length; i++) {
+      if (DATA.subjects[i].id === subjectId) return DATA.subjects[i];
+    }
+    return null;
+  }
+
+  /* ── Instructors Section ── */
+
+  function _buildInstructorCard(instructor) {
+    var subject = _findSubject(instructor.subjectId);
+    var subjectName = subject ? subject.name : '';
+    var subjectIcon = subject ? subject.icon : 'bi-person-fill';
+    var subjectColor = subject ? subject.color : 'emerald';
+
+    var card = U.el('article', { className: 'about-instructor-card h-100' });
+
+    card.appendChild(
+      U.el('div', { className: 'about-instructor-icon about-instructor-icon--' + subjectColor, aria: { hidden: 'true' } }, [
+        U.el('i', { className: 'bi ' + subjectIcon, aria: { hidden: 'true' } })
+      ])
+    );
+
+    card.appendChild(U.el('h3', { className: 'about-instructor-name', textContent: instructor.name }));
+
+    if (instructor.bio) {
+      card.appendChild(U.el('p', { className: 'about-instructor-bio', textContent: instructor.bio }));
+    }
+
+    if (subjectName) {
+      card.appendChild(
+        U.el('span', { className: 'about-instructor-badge about-instructor-badge--' + subjectColor, textContent: subjectName })
+      );
+    }
+
+    return card;
+  }
+
+  function _buildInstructorsSection() {
+    /* Populate META text */
+    if (META.instructorsSectionBadge)    SP.setTextById('instructors-badge-text',    META.instructorsSectionBadge);
+    if (META.instructorsSectionTitle)    SP.setTextById('instructors-title-text',    META.instructorsSectionTitle);
+    if (META.instructorsSectionSubtitle) SP.setTextById('instructors-subtitle-text', META.instructorsSectionSubtitle);
+
+    var grid = document.getElementById('instructors-grid');
+    if (!grid || !DATA.instructors || !DATA.instructors.length) return;
+
+    var frag = document.createDocumentFragment();
+
+    DATA.instructors.forEach(function (instructor) {
+      var col = U.el('div', { className: 'col-12 col-sm-6 col-lg-4' });
+      col.appendChild(_buildInstructorCard(instructor));
+      frag.appendChild(col);
+    });
+
+    grid.appendChild(frag);
+  }
+
   /* ── WhatsApp CTA ── */
 
   function buildWhatsAppCTA() {
@@ -109,6 +169,7 @@
     SP.buildNavBrand();
     SP.buildInlineBrandDomain();
     _populateDynamicText();
+    _buildInstructorsSection();
     SP.buildEmailLinks();
     buildWhatsAppCTA();
     SP.buildFooterCategories(COURSE_BASE);

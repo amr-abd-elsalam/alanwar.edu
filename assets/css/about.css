@@ -494,3 +494,133 @@
     gap: 0.75rem;
   }
 }
+
+
+/* ───────────────────────────────────────────
+   INSTRUCTORS CARDS
+─────────────────────────────────────────── */
+
+.about-instructor-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.about-instructor-card:hover {
+  border-color: var(--border-glow, var(--em-700));
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.35);
+  transform: translateY(-4px);
+}
+
+.about-instructor-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
+}
+
+.about-instructor-icon--emerald {
+  background: rgba(46, 125, 50, 0.1);
+  color: var(--em-400);
+  border: 1px solid var(--em-800);
+}
+
+.about-instructor-icon--teal {
+  background: rgba(124, 179, 66, 0.1);
+  color: var(--teal-400);
+  border: 1px solid var(--teal-700);
+}
+
+.about-instructor-icon--cyan {
+  background: rgba(0, 137, 123, 0.1);
+  color: var(--cyan-400);
+  border: 1px solid var(--cyan-600);
+}
+
+.about-instructor-icon--purple {
+  background: rgba(149, 117, 205, 0.15);
+  color: #b39ddb;
+  border: 1px solid rgba(149, 117, 205, 0.3);
+}
+
+.about-instructor-icon--amber {
+  background: rgba(255, 183, 77, 0.15);
+  color: #ffb74d;
+  border: 1px solid rgba(255, 183, 77, 0.3);
+}
+
+.about-instructor-icon--rose {
+  background: rgba(240, 98, 146, 0.15);
+  color: #f06292;
+  border: 1px solid rgba(240, 98, 146, 0.3);
+}
+
+.about-instructor-name {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.about-instructor-bio {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.about-instructor-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  margin-top: auto;
+}
+
+.about-instructor-badge--emerald {
+  background: rgba(46, 125, 50, 0.1);
+  color: var(--em-300, var(--em-400));
+  border: 1px solid var(--em-800);
+}
+
+.about-instructor-badge--teal {
+  background: rgba(124, 179, 66, 0.1);
+  color: var(--teal-400);
+  border: 1px solid var(--teal-700);
+}
+
+.about-instructor-badge--cyan {
+  background: rgba(0, 137, 123, 0.1);
+  color: var(--cyan-400);
+  border: 1px solid var(--cyan-600);
+}
+
+.about-instructor-badge--purple {
+  background: rgba(149, 117, 205, 0.15);
+  color: #b39ddb;
+  border: 1px solid rgba(149, 117, 205, 0.3);
+}
+
+.about-instructor-badge--amber {
+  background: rgba(255, 183, 77, 0.15);
+  color: #ffb74d;
+  border: 1px solid rgba(255, 183, 77, 0.3);
+}
+
+.about-instructor-badge--rose {
+  background: rgba(240, 98, 146, 0.15);
+  color: #f06292;
+  border: 1px solid rgba(240, 98, 146, 0.3);
+}

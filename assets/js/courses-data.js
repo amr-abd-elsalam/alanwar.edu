@@ -650,6 +650,11 @@ var COURSE_DATA = (function () {
       /* Catalog results format */
       resultsTemplate: 'عرض {start}\u2013{end} من {total} نتيجة',
 
+      /* Instructors section (about page) */
+      instructorsSectionBadge: 'فريق التدريس',
+      instructorsSectionTitle: 'المدرسين',
+      instructorsSectionSubtitle: 'مدرسين متخصصين في كل مادة — شرح مبسط ودعم مباشر',
+
       /* Course details section titles */
       sectionObjectives: 'هتتعلم إيه',
       sectionCurriculum: 'محتوى الكورس',

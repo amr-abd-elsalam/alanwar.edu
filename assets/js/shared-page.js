@@ -145,24 +145,17 @@ var SharedPage = (function () {
     var container = document.getElementById('footer-categories');
     if (!container) return;
 
-    var counts = {};
-    DATA.courses.forEach(function (c) {
-      if (!c.category) return;
-      counts[c.category] = (counts[c.category] || 0) + 1;
-    });
-
-    var names = Object.keys(counts);
-    if (!names.length) return;
-
     var frag = document.createDocumentFragment();
-    names.forEach(function (name) {
-      var href = buildCatalogUrl(courseBasePath, name);
+
+    DATA.subjects.forEach(function (subject) {
+      var href = buildCatalogUrl(courseBasePath, subject.name);
       frag.appendChild(
         U.el('li', null, [
-          U.el('a', { href: U.sanitizeUrl(href), textContent: name })
+          U.el('a', { href: U.sanitizeUrl(href), textContent: subject.name })
         ])
       );
     });
+
     container.appendChild(frag);
   }
 

@@ -132,8 +132,12 @@
           'url': base,
           'logo': base + (META.logoPath || '/assets/img/fav180.png'),
           'foundingDate': META.foundingYear,
+          'email': META.supportEmail,
+          'telephone': '+' + DATA.WHATSAPP_NUMBER,
           'contactPoint': {
             '@type': 'ContactPoint',
+            'telephone': '+' + DATA.WHATSAPP_NUMBER,
+            'email': META.supportEmail,
             'contactType': 'customer support',
             'availableLanguage': 'Arabic'
           }
