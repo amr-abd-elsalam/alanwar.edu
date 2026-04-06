@@ -1267,9 +1267,15 @@
       /* Count text */
       var countText = U.qs('#rating-count-text');
       if (countText) {
-        countText.textContent = count > 0
-          ? U.formatNumberAr(count) + ' تقييم'
-          : (META.ratingEmpty || 'مفيش تقييمات لسه — كن أول من يقيّم!');
+        if (data.error) {
+          countText.textContent = META.ratingLoadError || 'تعذر تحميل التقييمات.';
+          countText.className   = 'rating-count rating-count--error';
+        } else {
+          countText.textContent = count > 0
+            ? U.formatNumberAr(count) + ' تقييم'
+            : (META.ratingEmpty || 'مفيش تقييمات لسه — كن أول من يقيّم!');
+          countText.className   = 'rating-count';
+        }
       }
 
       /* Sidebar meta rating */
@@ -1647,7 +1653,7 @@
     .catch(function () {
       clearTimeout(timer);
       _hideChatTyping();
-      _addChatMessage('error', CHAT_CONFIG.errorMessage);
+      _addChatMessage('error', META.chatUnavailable || 'مساعد الكورس غير متاح حالياً.');
       _enableChatInput();
     });
   }

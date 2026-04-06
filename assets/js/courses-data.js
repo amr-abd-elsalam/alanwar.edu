@@ -620,6 +620,7 @@ var COURSE_DATA = (function () {
       chatWelcomeMessage: 'أهلاً بيك! أنا هنا عشان أساعدك بأي سؤال عن الكورسات. اسألني أي حاجة!',
       chatPlaceholder:    'اكتب سؤالك هنا...',
       chatErrorMessage:   'حصل مشكلة في الاتصال. جرّب تاني.',
+      chatUnavailable:    'مساعد الكورس غير متاح حالياً.',
 
       /* Hero section (index.html) */
       heroLine1:    'تعليم أفضل لأولادك،',
@@ -678,6 +679,7 @@ var COURSE_DATA = (function () {
       ratingSuccess:     'شكراً لتقييمك! رأيك بيساعدنا نحسّن.',
       ratingDuplicate:   'أنت قيّمت الكورس ده قبل كده. شكراً!',
       ratingError:       'حصل مشكلة. جرّب تاني بعد شوية.',
+      ratingLoadError:   'تعذر تحميل التقييمات. جرّب تاني لاحقاً.',
 
       /* Copyright */
       copyrightTemplate: '© {year} {brand}. جميع الحقوق محفوظة.',

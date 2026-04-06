@@ -70,11 +70,20 @@
         'name':       DATA.BRAND_NAME,
         'description': META.tagline,
         'url':        base,
+        'email':      META.supportEmail,
+        'telephone':  '+' + DATA.WHATSAPP_NUMBER,
         'address': {
           '@type': 'PostalAddress',
           'streetAddress': 'أعلى مسجد الأنوار المحمدية — أمام مستشفى المطرية',
           'addressLocality': 'القاهرة',
           'addressCountry': 'EG'
+        },
+        'contactPoint': {
+          '@type': 'ContactPoint',
+          'telephone': '+' + DATA.WHATSAPP_NUMBER,
+          'email': META.supportEmail,
+          'contactType': 'customer support',
+          'availableLanguage': 'Arabic'
         }
       }
     }, 'jsonld-about');
