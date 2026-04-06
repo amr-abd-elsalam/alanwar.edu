@@ -680,6 +680,7 @@ var COURSE_DATA = (function () {
       /* Currency */
       currencyLabel: 'ج.م',
       freeLabel:     'مجاني',
+      comingSoonLabel: 'قريباً',
 
       /* Course card / details buttons */
       viewCourse:    'عرض الكورس',

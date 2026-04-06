@@ -290,7 +290,9 @@ function buildStats() {
   function buildCategoryCard(name, count, colorKey) {
     var col = U.el('div', { className: 'col-6 col-sm-4 col-md-3 col-lg-2' });
 
-    var countLabel = count === 1 ? 'كورس واحد' : U.formatNumberAr(count) + ' كورسات';
+    var countLabel = count === 0
+      ? (META.comingSoonLabel || 'قريباً')
+      : count === 1 ? 'كورس واحد' : U.formatNumberAr(count) + ' كورسات';
 
     var anchor = U.el('a', {
       className: 'category-card category-card--' + colorKey,
@@ -320,9 +322,10 @@ function buildStats() {
     var catMap = SP.getCategoriesWithCount();
     var frag   = document.createDocumentFragment();
 
-    Object.keys(catMap).forEach(function (name) {
-      var colorKey = (DATA.categories[name] || {}).color || 'emerald';
-      frag.appendChild(buildCategoryCard(name, catMap[name], colorKey));
+    DATA.subjects.forEach(function (subject) {
+      var count    = catMap[subject.name] || 0;
+      var colorKey = subject.color || 'emerald';
+      frag.appendChild(buildCategoryCard(subject.name, count, colorKey));
     });
 
     grid.appendChild(frag);

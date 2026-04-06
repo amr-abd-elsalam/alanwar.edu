@@ -1079,7 +1079,7 @@
       wrapper.appendChild(
         U.el('a', {
           className: 'btn-enter-course',
-          href:      U.sanitizeUrl('/course/paid/' + course.id),
+          href:      U.sanitizeUrl('../paid/' + course.id + '/'),
           aria:      { label: (META.enterCourse || 'ادخل الكورس') }
         }, [
           U.el('i', { className: 'bi bi-box-arrow-in-left', aria: { hidden: 'true' } }),

@@ -968,10 +968,7 @@ body {
 .course-badge--grade {
   position: absolute;
   top: 0.75rem;
-  left: 0.75rem;
-  right: auto;
-  inset-inline-start: auto;
-  inset-inline-end: auto;
+  inset-inline-end: 0.75rem;
   background: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.9);
   font-size: 0.7rem;
