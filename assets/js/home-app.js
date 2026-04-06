@@ -79,6 +79,13 @@
     return (META.levels && META.levels[level]) || level;
   }
 
+  function _findGrade(gradeId) {
+    for (var i = 0; i < DATA.grades.length; i++) {
+      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
+    }
+    return null;
+  }
+
   /* ── SEO ── */
 
   function injectSEO() {
@@ -239,7 +246,15 @@ function buildStats() {
 
     /* Body */
     var body = U.el('div', { className: 'featured-card-body' });
-    body.appendChild(U.el('div', { className: 'featured-card-category', textContent: course.category }));
+
+    var catRow = U.el('div', { className: 'featured-card-category-row' });
+    catRow.appendChild(U.el('span', { className: 'featured-card-category', textContent: course.category }));
+    var grade = _findGrade(course.gradeId);
+    if (grade) {
+      catRow.appendChild(U.el('span', { className: 'featured-card-grade', textContent: grade.shortName }));
+    }
+    body.appendChild(catRow);
+
     body.appendChild(U.el('h3',  { className: 'featured-card-title',    textContent: course.title }));
 
     var descAttrs = { className: 'featured-card-desc', textContent: course.description };

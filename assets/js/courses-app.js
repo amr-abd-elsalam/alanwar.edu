@@ -91,6 +91,13 @@
     return m;
   }
 
+  function _findGrade(gradeId) {
+    for (var i = 0; i < DATA.grades.length; i++) {
+      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
+    }
+    return null;
+  }
+
   /* ── SEO Injection ── */
 
   function injectSEO() {
@@ -221,7 +228,17 @@
       textContent: course.category
     });
 
-    return U.el('div', { className: 'course-card-visual' }, [img, badge]);
+    var children = [img, badge];
+
+    var grade = _findGrade(course.gradeId);
+    if (grade) {
+      children.push(U.el('span', {
+        className: 'course-badge course-badge--grade',
+        textContent: grade.shortName
+      }));
+    }
+
+    return U.el('div', { className: 'course-card-visual' }, children);
   }
 
   function _buildCardStats(course) {

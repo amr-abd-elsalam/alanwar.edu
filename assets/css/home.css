@@ -671,3 +671,28 @@
     justify-content: center;
   }
 }
+
+/* ── Featured Card Category + Grade Row ── */
+.featured-card-category-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.5rem;
+}
+
+.featured-card-category-row .featured-card-category {
+  margin-bottom: 0;
+}
+
+.featured-card-grade {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  line-height: 1.4;
+}

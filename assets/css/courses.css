@@ -963,3 +963,26 @@ body {
     justify-content: center;
   }
 }
+
+/* ── Grade Badge (Catalog Card) ── */
+.course-badge--grade {
+  position: absolute;
+  top: 0.75rem;
+  left: 0.75rem;
+  right: auto;
+  inset-inline-start: auto;
+  inset-inline-end: auto;
+  background: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  z-index: 2;
+  line-height: 1.4;
+  letter-spacing: 0;
+  text-transform: none;
+}
