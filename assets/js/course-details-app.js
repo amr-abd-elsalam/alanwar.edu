@@ -1174,15 +1174,19 @@
     if (RS) displayStarsContainer.appendChild(RS.renderStars(0, false));
     card.appendChild(displayStarsContainer);
 
+    var ratingCountInitText = (META.ratingEnabled === false)
+      ? (META.ratingUnavailable || 'نظام التقييم غير متاح حالياً')
+      : (META.ratingLoading || 'جاري تحميل التقييمات...');
+
     card.appendChild(U.el('p', {
       className: 'rating-count',
       id: 'rating-count-text',
-      textContent: META.ratingLoading || 'جاري تحميل التقييمات...'
+      textContent: ratingCountInitText
     }));
 
     /* Interactive stars */
     var interactiveContainer = U.el('div', { id: 'rating-interactive-stars' });
-    if (RS) {
+    if (RS && META.ratingEnabled !== false) {
       var interactiveStars = RS.renderStars(0, true);
       interactiveContainer.appendChild(interactiveStars);
       RS.initializeStarEvents(interactiveStars, function (value) {
@@ -1247,7 +1251,7 @@
   }
 
   function _loadAndDisplayRatings(courseId) {
-    if (!RS) return;
+    if (!RS || META.ratingEnabled === false) return;
 
     RS.fetchRatings(courseId).then(function (data) {
       var avg   = data.average || 0;
@@ -1764,17 +1768,19 @@
 
     _initFooter();
 
-    /* Chat widget */
-    document.body.appendChild(buildChatFab());
-    document.body.appendChild(buildChatWidget(course));
-    initChatEvents(course.id);
+    /* Chat widget — only if enabled */
+    if (META.chatEnabled !== false) {
+      document.body.appendChild(buildChatFab());
+      document.body.appendChild(buildChatWidget(course));
+      initChatEvents(course.id);
 
-    /* Load chat history or show welcome */
-    var messagesContainer = U.qs('#chat-messages');
-    if (messagesContainer) {
-      var loaded = _loadChatHistory(course.id);
-      if (loaded === 0) {
-        _addChatMessage('model', CHAT_CONFIG.welcomeMessage);
+      /* Load chat history or show welcome */
+      var messagesContainer = U.qs('#chat-messages');
+      if (messagesContainer) {
+        var loaded = _loadChatHistory(course.id);
+        if (loaded === 0) {
+          _addChatMessage('model', CHAT_CONFIG.welcomeMessage);
+        }
       }
     }
   }

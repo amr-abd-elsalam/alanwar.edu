@@ -621,6 +621,7 @@ var COURSE_DATA = (function () {
       chatPlaceholder:    'اكتب سؤالك هنا...',
       chatErrorMessage:   'حصل مشكلة في الاتصال. جرّب تاني.',
       chatUnavailable:    'مساعد الكورس غير متاح حالياً.',
+      chatEnabled:        false,
 
       /* Hero section (index.html) */
       heroLine1:    'تعليم أفضل لأولادك،',
@@ -680,6 +681,8 @@ var COURSE_DATA = (function () {
       ratingDuplicate:   'أنت قيّمت الكورس ده قبل كده. شكراً!',
       ratingError:       'حصل مشكلة. جرّب تاني بعد شوية.',
       ratingLoadError:   'تعذر تحميل التقييمات. جرّب تاني لاحقاً.',
+      ratingEnabled:     false,
+      ratingUnavailable: 'نظام التقييم غير متاح حالياً.',
 
       /* Copyright */
       copyrightTemplate: '© {year} {brand}. جميع الحقوق محفوظة.',
