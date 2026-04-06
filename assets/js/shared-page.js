@@ -133,6 +133,7 @@ var SharedPage = (function () {
    */
   function buildFooter() {
     setTextById('footer-brand-name', DATA.BRAND_NAME);
+    if (META.footerTagline) setTextById('footer-tagline', META.footerTagline);
     setTextById('footer-copyright', buildCopyrightText());
   }
 

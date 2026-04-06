@@ -39,6 +39,8 @@
 
   /* ── Constants ── */
 
+  var BASE_URL = 'https://' + DATA.DOMAIN;
+
   var CONFIG = Object.freeze({
     CARDS_PER_PAGE:   6,
     DEBOUNCE_DELAY:   300,   /* ms — search input debounce */
@@ -822,7 +824,7 @@
           'position': i + 1,
           'item': {
             '@type':       'Course',
-            'url':         location.origin + '/course/course-details/index.html?id=' + c.id,
+            'url':         BASE_URL + '/course/course-details/?id=' + c.id,
             'name':        c.title,
             'description': c.description,
             'provider': {

@@ -80,6 +80,18 @@
     }, 'jsonld-about');
   }
 
+  /* ── Dynamic Text ── */
+
+  function _populateDynamicText() {
+    /* Header subtitle */
+    SP.setTextById('about-header-subtitle', META.footerTagline || '');
+
+    /* Visual panel — computed from data */
+    SP.setTextById('about-stat-courses',     U.formatNumberAr(DATA.courses.length) + '+');
+    SP.setTextById('about-stat-subjects',    U.formatNumberAr(DATA.subjects.length));
+    SP.setTextById('about-stat-instructors', U.formatNumberAr(DATA.instructors.length) + '+');
+  }
+
   /* ── WhatsApp CTA ── */
 
   function buildWhatsAppCTA() {
@@ -96,6 +108,7 @@
     injectSEO();
     SP.buildNavBrand();
     SP.buildInlineBrandDomain();
+    _populateDynamicText();
     SP.buildEmailLinks();
     buildWhatsAppCTA();
     SP.buildFooterCategories(COURSE_BASE);

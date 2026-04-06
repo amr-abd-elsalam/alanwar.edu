@@ -145,10 +145,12 @@
   /* ── Hero ── */
 
   function buildHero() {
-    SP.setTextById('nav-brand-name', DATA.BRAND_NAME);
-    SP.setTextById('hero-title-line1',   META.heroLine1    || '');
-    SP.setTextById('hero-title-gradient', META.heroLine2   || '');
+    SP.setTextById('hero-title-line1',    META.heroLine1    || '');
+    SP.setTextById('hero-title-gradient', META.heroLine2    || '');
     SP.setTextById('hero-subtitle',       META.heroSubtitle || '');
+    if (META.heroBadge)    SP.setTextById('hero-badge-text',   META.heroBadge);
+    if (META.ctaTitle)     SP.setTextById('cta-title-text',    META.ctaTitle);
+    if (META.ctaSubtitle)  SP.setTextById('cta-subtitle-text', META.ctaSubtitle);
   }
 
   /* ── Stats Bar ── */
