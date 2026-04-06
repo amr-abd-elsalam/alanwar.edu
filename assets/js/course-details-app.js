@@ -71,6 +71,20 @@
     return (META.levels && META.levels[level]) || level;
   }
 
+  function _findStage(stageId) {
+    for (var i = 0; i < DATA.stages.length; i++) {
+      if (DATA.stages[i].id === stageId) return DATA.stages[i];
+    }
+    return null;
+  }
+
+  function _findGrade(gradeId) {
+    for (var i = 0; i < DATA.grades.length; i++) {
+      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
+    }
+    return null;
+  }
+
   function clearElement(el) {
     if (!el) return;
     while (el.firstChild) el.removeChild(el.firstChild);
@@ -1091,6 +1105,16 @@
     var metaList = U.el('ul', { className: 'course-meta-list' });
 
     metaList.appendChild(_buildMetaItem('bi-person-fill',    'المدرّس',    course.instructor));
+
+    var _stage = _findStage(course.stageId);
+    var _grade = _findGrade(course.gradeId);
+    if (_stage) {
+      metaList.appendChild(_buildMetaItem('bi-layers-fill',  META.metaStage || 'المرحلة', _stage.name));
+    }
+    if (_grade) {
+      metaList.appendChild(_buildMetaItem('bi-mortarboard-fill', META.metaGrade || 'الصف', _grade.name));
+    }
+
     metaList.appendChild(_buildMetaItem('bi-tag-fill',       'المادة',    course.category));
     metaList.appendChild(_buildMetaItem('bi-bar-chart-fill', 'المستوى',   getLevelLabel(course.level)));
     metaList.appendChild(_buildMetaItem('bi-people-fill',    'الطلاب',    U.formatNumberAr(course.students)));
@@ -1697,18 +1721,28 @@
      INIT
   ══════════════════════════════════════ */
 
+  function _initFooter() {
+    SP.buildWhatsAppLinks(['footer-whatsapp-link']);
+    SP.buildFooterCategories('../');
+    SP.buildFooter();
+  }
+
   function init() {
     var app     = U.qs('#app') || document.body;
     var courseId = getCourseIdFromURL();
 
+    SP.buildNavBrand();
+
     if (!courseId) {
       renderError(app);
+      _initFooter();
       return;
     }
 
     var course = findCourse(courseId);
     if (!course) {
       renderError(app);
+      _initFooter();
       return;
     }
 
@@ -1720,6 +1754,8 @@
       var titleEl = U.qs('.page-title');
       if (titleEl) titleEl.scrollIntoView({ behavior: 'instant', block: 'start' });
     });
+
+    _initFooter();
 
     /* Chat widget */
     document.body.appendChild(buildChatFab());

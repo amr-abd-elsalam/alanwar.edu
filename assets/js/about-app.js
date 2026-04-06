@@ -72,7 +72,7 @@
         'url':        base,
         'address': {
           '@type': 'PostalAddress',
-          'streetAddress': '8 شارع الحرية، ميدان المطرية',
+          'streetAddress': 'أعلى مسجد الأنوار المحمدية — أمام مستشفى المطرية',
           'addressLocality': 'القاهرة',
           'addressCountry': 'EG'
         }

@@ -821,6 +821,7 @@
 
   function init() {
     injectSEO();
+    SP.buildNavBrand();
     cacheDom();
 
     if (DOM.contentArea) {
@@ -833,6 +834,9 @@
     readURL();
     bindEvents();
     render(false);
+    SP.buildWhatsAppLinks(['footer-whatsapp-link']);
+    SP.buildFooterCategories('./');
+    SP.buildFooter();
   }
 
   if (document.readyState === 'loading') {

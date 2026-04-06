@@ -607,7 +607,7 @@ var COURSE_DATA = (function () {
       description:      'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية في كل المواد: عربي، علوم، رياضيات، انجليزي، دراسات، وبرمجة. شرح تفصيلي من أفضل المدرسين مع دعم مباشر عبر واتساب.',
       descriptionShort: 'سنتر الأنوار المحمدية — كورسات أونلاين ابتدائي واعدادي مع أفضل المدرسين.',
       ogImage:          '/assets/img/og-image.png',
-      supportEmail:     'adhamemad36599@gmail.com',
+      supportEmail:     'eslamkotp53@gmail.com',
       foundingYear:     '2025',
       logoPath:         '/assets/img/fav180.png',
       legalLastUpdated: '2026-03-10',
@@ -654,6 +654,10 @@ var COURSE_DATA = (function () {
       sectionObjectives: 'هتتعلم إيه',
       sectionCurriculum: 'محتوى الكورس',
       sectionFaq:        'أسئلة شائعة',
+
+      /* Sidebar meta labels */
+      metaStage:         'المرحلة',
+      metaGrade:         'الصف',
 
       /* Rating card strings */
       ratingTitle:       'قيّم الكورس',
