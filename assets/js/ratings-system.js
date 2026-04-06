@@ -318,6 +318,7 @@ var RatingSystem = (function () {
     });
 
     // Keyboard navigation (Arrow keys + Enter/Space)
+    // RTL-aware: ArrowRight/Left follow visual direction, ArrowUp/Down are universal
     container.addEventListener('keydown', function (e) {
       if (container.classList.contains('stars-disabled')) return;
 
@@ -326,14 +327,26 @@ var RatingSystem = (function () {
       if (idx === -1) return;
 
       var newIdx = idx;
+      var isRtl = document.documentElement.dir === 'rtl' ||
+                  document.documentElement.getAttribute('dir') === 'rtl';
 
       switch (e.key) {
         case 'ArrowRight':
+          e.preventDefault();
+          newIdx = isRtl
+            ? Math.max(idx - 1, 0)
+            : Math.min(idx + 1, stars.length - 1);
+          break;
+        case 'ArrowLeft':
+          e.preventDefault();
+          newIdx = isRtl
+            ? Math.min(idx + 1, stars.length - 1)
+            : Math.max(idx - 1, 0);
+          break;
         case 'ArrowUp':
           e.preventDefault();
           newIdx = Math.min(idx + 1, stars.length - 1);
           break;
-        case 'ArrowLeft':
         case 'ArrowDown':
           e.preventDefault();
           newIdx = Math.max(idx - 1, 0);

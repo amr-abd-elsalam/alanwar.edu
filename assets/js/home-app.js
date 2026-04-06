@@ -346,6 +346,7 @@ function buildStats() {
 
   function init() {
     injectSEO();
+    SP.buildNavBrand();
     buildHero();
     buildStats();
     buildFeaturedCourses();
