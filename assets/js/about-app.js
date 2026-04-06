@@ -39,7 +39,7 @@
   function injectSEO() {
     var base      = 'https://' + DATA.DOMAIN;
     var pageUrl   = base + '/about.html';
-    var pageTitle = 'عن المدرس \u2014 ' + DATA.BRAND_NAME;
+    var pageTitle = 'عن السنتر \u2014 ' + DATA.BRAND_NAME;
     var pageDesc  = META.descriptionShort + ' \u2014 تعرف على السنتر ورؤيتنا وطريقة عملنا.';
 
     SP.injectBaseSEO({
