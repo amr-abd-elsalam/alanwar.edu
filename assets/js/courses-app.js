@@ -49,6 +49,8 @@
   var VALID_LEVELS     = ['All', 'Beginner', 'Intermediate', 'Advanced'];
   var VALID_RATINGS    = [0, 1, 2, 3, 4];
   var VALID_CATEGORIES = Object.keys(DATA.categories);
+  var VALID_STAGES     = DATA.stages.map(function (s) { return s.id; });
+  var VALID_GRADES     = DATA.grades.map(function (g) { return g.id; });
 
   var SORT_OPTIONS = [
     { key: 'newly published',   label: 'الأحدث'             },
@@ -94,6 +96,13 @@
   function _findGrade(gradeId) {
     for (var i = 0; i < DATA.grades.length; i++) {
       if (DATA.grades[i].id === gradeId) return DATA.grades[i];
+    }
+    return null;
+  }
+
+  function _findStage(stageId) {
+    for (var i = 0; i < DATA.stages.length; i++) {
+      if (DATA.stages[i].id === stageId) return DATA.stages[i];
     }
     return null;
   }
@@ -155,9 +164,15 @@
   ══════════════════════════════════════ */
 
   function readFilters() {
-    if (!state.filtersEl) return { categories: [], level: 'All', minRating: 0, search: '' };
+    if (!state.filtersEl) return { categories: [], stage: 'All', grades: [], level: 'All', minRating: 0, search: '' };
 
     var cats = U.qsa('input[data-filter="category"]:checked', state.filtersEl)
+      .map(function (e) { return e.value; });
+
+    var stageEl = U.qs('input[name="stage-filter"]:checked', state.filtersEl);
+    var st = stageEl ? stageEl.value : 'All';
+
+    var grs = U.qsa('input[data-filter="grade"]:checked', state.filtersEl)
       .map(function (e) { return e.value; });
 
     var levelEl = U.qs('input[name="level-filter"]:checked', state.filtersEl);
@@ -168,7 +183,7 @@
 
     var s = DOM.search ? DOM.search.value.toLowerCase().trim() : '';
 
-    return { categories: cats, level: lv, minRating: rt, search: s };
+    return { categories: cats, stage: st, grades: grs, level: lv, minRating: rt, search: s };
   }
 
   function matchesSearch(course, searchTerm) {
@@ -184,6 +199,8 @@
 
   function filterExceptCategory(courses, f) {
     return courses.filter(function (c) {
+      if (f.stage && f.stage !== 'All' && c.stageId !== f.stage) return false;
+      if (f.grades && f.grades.length > 0 && f.grades.indexOf(c.gradeId) === -1) return false;
       if (c.rating < f.minRating) return false;
       if (f.level && f.level !== 'All' && c.level !== f.level) return false;
       if (!matchesSearch(c, f.search)) return false;
@@ -353,6 +370,51 @@
     root.appendChild(catList);
   }
 
+  function _buildStageFilters(root) {
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterStageHeading || 'المرحلة' }));
+    var stageGroup = U.el('div', { className: 'filter-group', role: 'radiogroup', aria: { label: 'فلتر المرحلة' } });
+
+    /* "All stages" option */
+    var allId = 'stage-all';
+    var allR  = U.el('input', { className: 'filter-radio', type: 'radio', id: allId, name: 'stage-filter', value: 'All' });
+    allR.checked = true;
+    var allLabel = U.el('label', { className: 'filter-label', textContent: META.filterStageAll || 'كل المراحل' });
+    allLabel.setAttribute('for', allId);
+    stageGroup.appendChild(U.el('div', { className: 'filter-item' }, [allR, allLabel]));
+
+    DATA.stages.forEach(function (stage) {
+      var id = 'stage-' + stage.id;
+      var r  = U.el('input', { className: 'filter-radio', type: 'radio', id: id, name: 'stage-filter', value: stage.id });
+      var label = U.el('label', { className: 'filter-label', textContent: stage.name });
+      label.setAttribute('for', id);
+      stageGroup.appendChild(U.el('div', { className: 'filter-item' }, [r, label]));
+    });
+
+    root.appendChild(stageGroup);
+  }
+
+  function _buildGradeFilters(root) {
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterGradeHeading || 'الصف الدراسي' }));
+    var gradeList = U.el('div', { className: 'filter-group', id: 'grade-filter-list' });
+
+    DATA.grades.forEach(function (grade) {
+      var id = 'grade-' + grade.id;
+      var cb = U.el('input', {
+        className: 'filter-checkbox',
+        type: 'checkbox',
+        id: id,
+        value: grade.id,
+        dataset: { filter: 'grade', stageId: grade.stageId }
+      });
+      var label = U.el('label', { className: 'filter-label', textContent: grade.name });
+      label.setAttribute('for', id);
+      var countEl = U.el('span', { className: 'filter-count', textContent: '٠' });
+      gradeList.appendChild(U.el('div', { className: 'filter-item' }, [cb, label, countEl]));
+    });
+
+    root.appendChild(gradeList);
+  }
+
   function _buildLevelFilters(root) {
     root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'المستوى' }));
     var levelGroup = U.el('div', { className: 'filter-group', role: 'radiogroup', aria: { label: 'فلتر المستوى' } });
@@ -424,6 +486,8 @@
     root.appendChild(U.el('h2', { className: 'filters-title d-none d-lg-block', textContent: 'الفلاتر' }));
 
     _buildCategoryFilters(root);
+    _buildStageFilters(root);
+    _buildGradeFilters(root);
     _buildLevelFilters(root);
     _buildRatingFilters(root);
     _buildFilterActions(root);
@@ -443,6 +507,43 @@
       item.classList.toggle('disabled', n === 0);
       cb.disabled = n === 0;
       if (n === 0 && cb.checked) {
+        cb.checked = false;
+      }
+    });
+  }
+
+  /**
+   * Update grade checkbox availability based on selected stage.
+   * Disables + unchecks grades that don't belong to the selected stage.
+   * Updates grade counts based on courses matching current non-grade filters.
+   */
+  function updateGradeState(filteredByOther) {
+    if (!state.filtersEl) return;
+
+    var stageEl = U.qs('input[name="stage-filter"]:checked', state.filtersEl);
+    var selectedStage = stageEl ? stageEl.value : 'All';
+
+    /* Count courses per grade from the filtered set */
+    var gradeCounts = {};
+    filteredByOther.forEach(function (c) {
+      gradeCounts[c.gradeId] = (gradeCounts[c.gradeId] || 0) + 1;
+    });
+
+    U.qsa('#grade-filter-list .filter-item', state.filtersEl).forEach(function (item) {
+      var cb = U.qs('.filter-checkbox', item);
+      var ct = U.qs('.filter-count', item);
+      if (!cb || !ct) return;
+
+      var gradeStageId = cb.dataset.stageId;
+      var stageMatch   = (selectedStage === 'All' || gradeStageId === selectedStage);
+      var n            = stageMatch ? (gradeCounts[cb.value] || 0) : 0;
+
+      ct.textContent = U.formatNumberAr(n);
+      item.classList.toggle('disabled', !stageMatch || n === 0);
+      cb.disabled = !stageMatch || n === 0;
+
+      /* Uncheck grades that became disabled */
+      if (cb.disabled && cb.checked) {
         cb.checked = false;
       }
     });
@@ -625,6 +726,8 @@
     var p = new URLSearchParams();
 
     if (f.categories.length)                     p.set('categories', f.categories.join(','));
+    if (f.stage !== 'All')                       p.set('stage',      f.stage);
+    if (f.grades.length)                         p.set('grades',     f.grades.join(','));
     if (f.minRating > 0)                         p.set('rating',     String(f.minRating));
     if (f.level !== 'All')                       p.set('level',      f.level);
     if (f.search)                                p.set('search',     f.search);
@@ -646,6 +749,23 @@
     if (cats.length && state.filtersEl) {
       U.qsa('input[data-filter="category"]', state.filtersEl).forEach(function (cb) {
         cb.checked = cats.indexOf(cb.value) !== -1;
+      });
+    }
+
+    /* Stage */
+    var stg = p.get('stage');
+    if (VALID_STAGES.indexOf(stg) !== -1 && state.filtersEl) {
+      var si = U.qs('input[name="stage-filter"][value="' + stg + '"]', state.filtersEl);
+      if (si) si.checked = true;
+    }
+
+    /* Grades */
+    var grs = (p.get('grades') || '').split(',').filter(function (g) {
+      return VALID_GRADES.indexOf(g) !== -1;
+    });
+    if (grs.length && state.filtersEl) {
+      U.qsa('input[data-filter="grade"]', state.filtersEl).forEach(function (cb) {
+        cb.checked = grs.indexOf(cb.value) !== -1;
       });
     }
 
@@ -733,10 +853,24 @@
   function render(resetPage) {
     if (resetPage) state.currentPage = 1;
 
-    var f        = readFilters();
-    var pre      = filterExceptCategory(DATA.courses, f);
-    updateCategoryCounts(countCategories(pre));
+    var f = readFilters();
 
+    /* For category counts: filter by everything EXCEPT category and grade */
+    var forCatCounts = DATA.courses.filter(function (c) {
+      if (f.stage && f.stage !== 'All' && c.stageId !== f.stage) return false;
+      if (c.rating < f.minRating) return false;
+      if (f.level && f.level !== 'All' && c.level !== f.level) return false;
+      if (!matchesSearch(c, f.search)) return false;
+      return true;
+    });
+    updateCategoryCounts(countCategories(forCatCounts));
+
+    /* For grade counts: filter by everything EXCEPT grade */
+    var forGradeCounts = filterByCategory(forCatCounts, f.categories);
+    updateGradeState(forGradeCounts);
+
+    /* Full filter pipeline */
+    var pre      = filterExceptCategory(DATA.courses, f);
     var filtered = filterByCategory(pre, f.categories);
     var sorted   = sortCourses(filtered);
     state.filteredCourses = sorted;
@@ -783,6 +917,11 @@
     if (state.filtersEl) {
       U.qsa('input[data-filter="category"]', state.filtersEl).forEach(function (c) { c.checked = false; });
 
+      var allStage = U.qs('input[name="stage-filter"][value="All"]', state.filtersEl);
+      if (allStage) allStage.checked = true;
+
+      U.qsa('input[data-filter="grade"]', state.filtersEl).forEach(function (c) { c.checked = false; });
+
       var allLevel  = U.qs('input[name="level-filter"][value="All"]', state.filtersEl);
       if (allLevel) allLevel.checked = true;
 
@@ -812,7 +951,7 @@
     /* Filter changes */
     if (state.filtersEl) {
       state.filtersEl.addEventListener('change', function (e) {
-        if (e.target.matches('input[data-filter="category"], input[name="level-filter"], input[name="rating-filter"]')) {
+        if (e.target.matches('input[data-filter="category"], input[data-filter="grade"], input[name="stage-filter"], input[name="level-filter"], input[name="rating-filter"]')) {
           render(true);
         }
       });

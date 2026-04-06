@@ -659,6 +659,11 @@ var COURSE_DATA = (function () {
       metaStage:         'المرحلة',
       metaGrade:         'الصف',
 
+      /* Catalog filter headings */
+      filterStageHeading: 'المرحلة',
+      filterGradeHeading: 'الصف الدراسي',
+      filterStageAll:     'كل المراحل',
+
       /* Rating card strings */
       ratingTitle:       'قيّم الكورس',
       ratingSubtitle:    'شاركنا رأيك عشان نحسّن المحتوى',

@@ -95,6 +95,7 @@
   function init() {
     injectSEO();
     SP.buildNavBrand();
+    SP.buildInlineBrandDomain();
     SP.buildEmailLinks();
     buildWhatsAppCTA();
     SP.buildFooterCategories(COURSE_BASE);
