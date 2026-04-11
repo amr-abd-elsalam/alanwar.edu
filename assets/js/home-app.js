@@ -150,6 +150,27 @@
     if (META.heroBadge)    SP.setTextById('hero-badge-text',   META.heroBadge);
     if (META.ctaTitle)     SP.setTextById('cta-title-text',    META.ctaTitle);
     if (META.ctaSubtitle)  SP.setTextById('cta-subtitle-text', META.ctaSubtitle);
+    if (META.ctaBadge)     SP.setTextById('cta-badge-text',    META.ctaBadge);
+  }
+
+  /* ── Section Text Injection ── */
+
+  function _populateSectionStrings() {
+    /* Featured section */
+    if (META.featuredBadge)    SP.setTextById('featured-badge-text',    META.featuredBadge);
+    if (META.featuredTitle)    SP.setTextById('featured-title-text',    META.featuredTitle);
+    if (META.featuredSubtitle) SP.setTextById('featured-subtitle-text', META.featuredSubtitle);
+    if (META.featuredViewAll)  SP.setTextById('featured-view-all-text', META.featuredViewAll);
+
+    /* Categories section */
+    if (META.categoriesBadge)    SP.setTextById('categories-badge-text',    META.categoriesBadge);
+    if (META.categoriesTitle)    SP.setTextById('categories-title-text',    META.categoriesTitle);
+    if (META.categoriesSubtitle) SP.setTextById('categories-subtitle-text', META.categoriesSubtitle);
+
+    /* How-to section */
+    if (META.howBadge)    SP.setTextById('how-badge-text',    META.howBadge);
+    if (META.howTitle)    SP.setTextById('how-title-text',    META.howTitle);
+    if (META.howSubtitle) SP.setTextById('how-subtitle-text', META.howSubtitle);
   }
 
   /* ── Stats Bar ── */
@@ -330,6 +351,36 @@ function buildStats() {
     grid.appendChild(frag);
   }
 
+  /* ── How-to Steps (dynamic from META) ── */
+
+  function buildHowSteps() {
+    var grid = document.getElementById('how-steps-grid');
+    if (!grid || !META.howSteps || !META.howSteps.length) return;
+
+    /* Clear existing HTML fallback content */
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+
+    var frag = document.createDocumentFragment();
+
+    META.howSteps.forEach(function (step, idx) {
+      var stepDisplay = idx < 9 ? '0' + (idx + 1) : String(idx + 1);
+      var isAccent = idx === 1;
+
+      var card = U.el('article', { className: 'how-card' + (isAccent ? ' how-card--accent' : '') + ' h-100' }, [
+        U.el('div', { className: 'how-step-number', aria: { hidden: 'true' }, textContent: stepDisplay }),
+        U.el('div', { className: 'how-icon mb-3', aria: { hidden: 'true' } }, [
+          U.el('i', { className: 'bi ' + (step.icon || 'bi-check-circle'), aria: { hidden: 'true' } })
+        ]),
+        U.el('h3', { className: 'how-title', textContent: step.title }),
+        U.el('p',  { className: 'how-desc',  textContent: step.desc })
+      ]);
+
+      frag.appendChild(U.el('div', { className: 'col-12 col-md-4' }, [card]));
+    });
+
+    grid.appendChild(frag);
+  }
+
   /* ── WhatsApp & Footer ── */
 
   function buildWhatsAppCTA() {
@@ -343,9 +394,11 @@ function buildStats() {
     injectSEO();
     SP.buildNavBrand();
     buildHero();
+    _populateSectionStrings();
     buildStats();
     buildFeaturedCourses();
     buildCategories();
+    buildHowSteps();
     buildWhatsAppCTA();
     SP.buildWhatsAppLinks(['footer-whatsapp-link', 'footer-wa-link-2']);
     SP.buildEmailLinks();
