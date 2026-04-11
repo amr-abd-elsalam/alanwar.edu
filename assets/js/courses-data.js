@@ -691,6 +691,12 @@ var COURSE_DATA = (function () {
       currencyLabel: 'ج.م',
       freeLabel:     'مجاني',
       comingSoonLabel: 'قريباً',
+      statCoursesLabel: 'كورسات متاحة',
+      statStudentsLabel: 'طلاب مسجلين',
+      statRatingLabel: 'متوسط التقييم',
+      statSatisfactionLabel: 'نسبة الرضا',
+      statNoData: 'لا يوجد',
+      filterInstructorHeading: 'المدرس',
 
       /* Course card / details buttons */
       viewCourse:    'عرض الكورس',

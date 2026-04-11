@@ -44,6 +44,13 @@
 
   /* ── Computed Stats ── */
 
+  function _calcSatisfaction(ratedCourses) {
+    if (!ratedCourses.length) return META.statNoData || 'لا يوجد';
+    var satisfied = ratedCourses.filter(function (c) { return c.rating >= 3; }).length;
+    var pct = Math.round((satisfied / ratedCourses.length) * 100);
+    return U.formatNumberAr(pct) + '٪';
+  }
+
   function computeStats() {
     var courseCount   = DATA.courses.length;
     var totalStudents = DATA.courses.reduce(function (s, c) { return s + c.students; }, 0);
@@ -53,10 +60,10 @@
       : 0;
 
     return [
-      { icon: 'bi-journal-bookmark-fill', number: U.formatNumberAr(courseCount),   label: 'كورسات متاحة' },
-      { icon: 'bi-people-fill',           number: U.formatNumberAr(totalStudents), label: 'طلاب مسجلين' },
-      { icon: 'bi-star-fill',             number: avgRating > 0 ? U.formatNumberAr(avgRating.toFixed(1)) : '٠', label: 'متوسط التقييم' },
-      { icon: 'bi-award-fill',            number: ratedCourses.length > 0 ? '١٠٠٪' : '٠٪', label: 'نسبة الرضا' }
+      { icon: 'bi-journal-bookmark-fill', number: U.formatNumberAr(courseCount),   label: META.statCoursesLabel || 'كورسات متاحة' },
+      { icon: 'bi-people-fill',           number: U.formatNumberAr(totalStudents), label: META.statStudentsLabel || 'طلاب مسجلين' },
+      { icon: 'bi-star-fill',             number: avgRating > 0 ? U.formatNumberAr(avgRating.toFixed(1)) : '٠', label: META.statRatingLabel || 'متوسط التقييم' },
+      { icon: 'bi-award-fill',            number: _calcSatisfaction(ratedCourses), label: META.statSatisfactionLabel || 'نسبة الرضا' }
     ];
   }
 

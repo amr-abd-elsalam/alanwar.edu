@@ -52,7 +52,8 @@
   var VALID_RATINGS    = [0, 1, 2, 3, 4];
   var VALID_CATEGORIES = Object.keys(DATA.categories);
   var VALID_STAGES     = DATA.stages.map(function (s) { return s.id; });
-  var VALID_GRADES     = DATA.grades.map(function (g) { return g.id; });
+  var VALID_GRADES       = DATA.grades.map(function (g) { return g.id; });
+  var VALID_INSTRUCTORS  = DATA.instructors.map(function (inst) { return inst.id; });
 
   var SORT_OPTIONS = [
     { key: 'newly published',   label: 'الأحدث'             },
@@ -171,9 +172,12 @@
     var ratingEl = U.qs('input[name="rating-filter"]:checked', state.filtersEl);
     var rt = parseInt(ratingEl ? ratingEl.value : '0', 10);
 
+    var insts = U.qsa('input[data-filter="instructor"]:checked', state.filtersEl)
+      .map(function (e) { return e.value; });
+
     var s = DOM.search ? DOM.search.value.toLowerCase().trim() : '';
 
-    return { categories: cats, stage: st, grades: grs, level: lv, minRating: rt, search: s };
+    return { categories: cats, stage: st, grades: grs, instructors: insts, level: lv, minRating: rt, search: s };
   }
 
   function matchesSearch(course, searchTerm) {
@@ -192,6 +196,7 @@
       if (f.stage && f.stage !== 'All' && c.stageId !== f.stage) return false;
       if (f.grades && f.grades.length > 0 && f.grades.indexOf(c.gradeId) === -1) return false;
       if (c.rating < f.minRating) return false;
+      if (f.instructors && f.instructors.length > 0 && f.instructors.indexOf(c.instructorId) === -1) return false;
       if (f.level && f.level !== 'All' && c.level !== f.level) return false;
       if (!matchesSearch(c, f.search)) return false;
       return true;
@@ -405,6 +410,32 @@
     root.appendChild(gradeList);
   }
 
+  function _buildInstructorFilters(root) {
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterInstructorHeading || 'المدرس' }));
+    var instList = U.el('div', { className: 'filter-group', id: 'instructor-filter-list' });
+
+    DATA.instructors.forEach(function (inst) {
+      var count = DATA.courses.filter(function (c) { return c.instructorId === inst.id; }).length;
+      var id    = 'inst-' + inst.id;
+
+      var cb    = U.el('input', {
+        className: 'filter-checkbox',
+        type: 'checkbox',
+        id: id,
+        value: inst.id,
+        dataset: { filter: 'instructor' }
+      });
+
+      var label = U.el('label', { className: 'filter-label', textContent: inst.name });
+      label.setAttribute('for', id);
+
+      var countEl = U.el('span', { className: 'filter-count', textContent: U.formatNumberAr(count) });
+      instList.appendChild(U.el('div', { className: 'filter-item' }, [cb, label, countEl]));
+    });
+
+    root.appendChild(instList);
+  }
+
   function _buildLevelFilters(root) {
     root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'المستوى' }));
     var levelGroup = U.el('div', { className: 'filter-group', role: 'radiogroup', aria: { label: 'فلتر المستوى' } });
@@ -478,6 +509,7 @@
     _buildCategoryFilters(root);
     _buildStageFilters(root);
     _buildGradeFilters(root);
+    _buildInstructorFilters(root);
     _buildLevelFilters(root);
     _buildRatingFilters(root);
     _buildFilterActions(root);
@@ -718,6 +750,7 @@
     if (f.categories.length)                     p.set('categories', f.categories.join(','));
     if (f.stage !== 'All')                       p.set('stage',      f.stage);
     if (f.grades.length)                         p.set('grades',     f.grades.join(','));
+    if (f.instructors && f.instructors.length)    p.set('instructors', f.instructors.join(','));
     if (f.minRating > 0)                         p.set('rating',     String(f.minRating));
     if (f.level !== 'All')                       p.set('level',      f.level);
     if (f.search)                                p.set('search',     f.search);
@@ -757,6 +790,16 @@
     if (grs.length && state.filtersEl) {
       U.qsa('input[data-filter="grade"]', state.filtersEl).forEach(function (cb) {
         cb.checked = grs.indexOf(cb.value) !== -1;
+      });
+    }
+
+    /* Instructors */
+    var rawInsts = (p.get('instructors') || '').split(',').filter(function (inst) {
+      return VALID_INSTRUCTORS.indexOf(inst) !== -1;
+    });
+    if (rawInsts.length && state.filtersEl) {
+      U.qsa('input[data-filter="instructor"]', state.filtersEl).forEach(function (cb) {
+        cb.checked = rawInsts.indexOf(cb.value) !== -1;
       });
     }
 
@@ -912,6 +955,7 @@
       if (allStage) allStage.checked = true;
 
       U.qsa('input[data-filter="grade"]', state.filtersEl).forEach(function (c) { c.checked = false; });
+      U.qsa('input[data-filter="instructor"]', state.filtersEl).forEach(function (c) { c.checked = false; });
 
       var allLevel  = U.qs('input[name="level-filter"][value="All"]', state.filtersEl);
       if (allLevel) allLevel.checked = true;
@@ -942,7 +986,7 @@
     /* Filter changes */
     if (state.filtersEl) {
       state.filtersEl.addEventListener('change', function (e) {
-        if (e.target.matches('input[data-filter="category"], input[data-filter="grade"], input[name="stage-filter"], input[name="level-filter"], input[name="rating-filter"]')) {
+        if (e.target.matches('input[data-filter="category"], input[data-filter="grade"], input[data-filter="instructor"], input[name="stage-filter"], input[name="level-filter"], input[name="rating-filter"]')) {
           render(true);
         }
       });
