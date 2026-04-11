@@ -721,6 +721,9 @@ var COURSE_DATA = (function () {
       statSatisfactionLabel: 'نسبة الرضا',
       statNoData: 'لا يوجد',
       filterInstructorHeading: 'المدرس',
+      filterCategoryHeading: 'المواد',
+      filterLevelHeading: 'المستوى',
+      filterRatingHeading: 'التقييم',
 
       /* Course card / details buttons */
       viewCourse:    'عرض الكورس',

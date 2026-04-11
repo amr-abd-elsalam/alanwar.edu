@@ -339,7 +339,7 @@
   ══════════════════════════════════════ */
 
   function _buildCategoryFilters(root) {
-    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'المواد' }));
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterCategoryHeading || 'المواد' }));
     var catList   = U.el('div', { className: 'filter-group', id: 'category-filter-list' });
     var allCounts = countCategories(DATA.courses);
 
@@ -437,7 +437,7 @@
   }
 
   function _buildLevelFilters(root) {
-    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'المستوى' }));
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterLevelHeading || 'المستوى' }));
     var levelGroup = U.el('div', { className: 'filter-group', role: 'radiogroup', aria: { label: 'فلتر المستوى' } });
 
     VALID_LEVELS.forEach(function (lv) {
@@ -455,7 +455,7 @@
   }
 
   function _buildRatingFilters(root) {
-    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: 'التقييم' }));
+    root.appendChild(U.el('h3', { className: 'filters-heading', textContent: META.filterRatingHeading || 'التقييم' }));
     var ratingGroup = U.el('div', { className: 'filter-group', role: 'radiogroup', aria: { label: 'فلتر التقييم' } });
 
     var ratingOptions = [
