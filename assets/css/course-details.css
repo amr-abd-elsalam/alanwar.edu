@@ -1894,3 +1894,26 @@
   outline: 2px solid var(--emerald-400);
   outline-offset: 2px;
 }
+
+
+/* ── Noscript Fallback ── */
+
+.noscript-fallback {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: var(--text-secondary);
+}
+
+.noscript-fallback-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.noscript-fallback-text {
+  color: var(--text-dim);
+}
+
+.noscript-fallback-link {
+  color: var(--emerald-400);
+  text-decoration: underline;
+}
