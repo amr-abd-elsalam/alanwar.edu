@@ -413,6 +413,21 @@
   background: rgba(0, 137, 123, 0.05);
 }
 
+.category-card--purple:hover {
+  border-color: var(--purple-600);
+  background: rgba(149, 117, 205, 0.05);
+}
+
+.category-card--amber:hover {
+  border-color: var(--amber-600);
+  background: rgba(255, 183, 77, 0.05);
+}
+
+.category-card--rose:hover {
+  border-color: var(--rose-600);
+  background: rgba(240, 98, 146, 0.05);
+}
+
 .category-icon {
   width: 3rem;
   height: 3rem;
@@ -436,6 +451,21 @@
 .category-icon--cyan {
   background: rgba(0, 137, 123, 0.12);
   color: var(--cyan-400);
+}
+
+.category-icon--purple {
+  background: rgba(149, 117, 205, 0.12);
+  color: var(--purple-400);
+}
+
+.category-icon--amber {
+  background: rgba(255, 183, 77, 0.12);
+  color: var(--amber-400);
+}
+
+.category-icon--rose {
+  background: rgba(240, 98, 146, 0.12);
+  color: var(--rose-400);
 }
 
 .category-name {
