@@ -357,6 +357,32 @@ var SharedPage = (function () {
     return map;
   }
 
+  /* ── Data Lookup Helpers ── */
+
+  /**
+   * Find a grade object by its ID.
+   * @param {string} gradeId — e.g. 'grade-7'
+   * @returns {object|null} grade object or null if not found
+   */
+  function findGrade(gradeId) {
+    for (var i = 0; i < DATA.grades.length; i++) {
+      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
+    }
+    return null;
+  }
+
+  /**
+   * Find a stage object by its ID.
+   * @param {string} stageId — e.g. 'primary', 'preparatory'
+   * @returns {object|null} stage object or null if not found
+   */
+  function findStage(stageId) {
+    for (var i = 0; i < DATA.stages.length; i++) {
+      if (DATA.stages[i].id === stageId) return DATA.stages[i];
+    }
+    return null;
+  }
+
   /* ── Public API ── */
 
   return Object.freeze({
@@ -388,6 +414,10 @@ var SharedPage = (function () {
     injectBaseSEO:    injectBaseSEO,
     injectJsonLd:     injectJsonLd,
     markCurrentNavLink: markCurrentNavLink,
+
+    /* Data lookup */
+    findGrade:              findGrade,
+    findStage:              findStage,
 
     /* UI helpers */
     initTocScroll:          initTocScroll,

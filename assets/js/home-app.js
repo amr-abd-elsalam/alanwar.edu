@@ -34,14 +34,7 @@
 
   var FEATURED_COUNT = 3;
 
-  var CATEGORY_ICONS = {
-    'اللغة العربية':                  'bi-book',
-    'العلوم':                         'bi-virus2',
-    'الرياضيات':                      'bi-calculator',
-    'اللغة الإنجليزية':                'bi-translate',
-    'الدراسات الاجتماعية':             'bi-globe-americas',
-    'البرمجة وتكنولوجيا المعلومات':    'bi-code-slash'
-  };
+  /* CATEGORY_ICONS removed — icons now read from DATA.subjects[].icon */
 
   /* ── Path Constants (relative from /) ── */
 
@@ -79,12 +72,7 @@
     return (META.levels && META.levels[level]) || level;
   }
 
-  function _findGrade(gradeId) {
-    for (var i = 0; i < DATA.grades.length; i++) {
-      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
-    }
-    return null;
-  }
+  /* _findGrade() moved to SharedPage.findGrade() */
 
   /* ── SEO ── */
 
@@ -255,7 +243,7 @@ function buildStats() {
 
     var catRow = U.el('div', { className: 'featured-card-category-row' });
     catRow.appendChild(U.el('span', { className: 'featured-card-category', textContent: course.category }));
-    var grade = _findGrade(course.gradeId);
+    var grade = SP.findGrade(course.gradeId);
     if (grade) {
       catRow.appendChild(U.el('span', { className: 'featured-card-grade', textContent: grade.shortName }));
     }
@@ -291,7 +279,7 @@ function buildStats() {
 
   /* ── Categories ── */
 
-  function buildCategoryCard(name, count, colorKey) {
+  function buildCategoryCard(name, count, colorKey, iconClass) {
     var col = U.el('div', { className: 'col-6 col-sm-4 col-md-3 col-lg-2' });
 
     var countLabel = count === 0
@@ -307,7 +295,7 @@ function buildStats() {
     anchor.appendChild(
       U.el('div', { className: 'category-icon category-icon--' + colorKey }, [
         U.el('i', {
-          className: 'bi ' + (CATEGORY_ICONS[name] || 'bi-bookmark-fill'),
+          className: 'bi ' + (iconClass || 'bi-bookmark-fill'),
           aria:      { hidden: 'true' }
         })
       ])
@@ -329,7 +317,7 @@ function buildStats() {
     DATA.subjects.forEach(function (subject) {
       var count    = catMap[subject.name] || 0;
       var colorKey = subject.color || 'emerald';
-      frag.appendChild(buildCategoryCard(subject.name, count, colorKey));
+      frag.appendChild(buildCategoryCard(subject.name, count, colorKey, subject.icon));
     });
 
     grid.appendChild(frag);

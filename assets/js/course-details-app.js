@@ -71,19 +71,7 @@
     return (META.levels && META.levels[level]) || level;
   }
 
-  function _findStage(stageId) {
-    for (var i = 0; i < DATA.stages.length; i++) {
-      if (DATA.stages[i].id === stageId) return DATA.stages[i];
-    }
-    return null;
-  }
-
-  function _findGrade(gradeId) {
-    for (var i = 0; i < DATA.grades.length; i++) {
-      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
-    }
-    return null;
-  }
+  /* _findStage()/_findGrade() moved to SharedPage.findStage()/findGrade() */
 
   function clearElement(el) {
     if (!el) return;
@@ -1106,8 +1094,8 @@
 
     metaList.appendChild(_buildMetaItem('bi-person-fill',    'المدرّس',    course.instructor));
 
-    var _stage = _findStage(course.stageId);
-    var _grade = _findGrade(course.gradeId);
+    var _stage = SP.findStage(course.stageId);
+    var _grade = SP.findGrade(course.gradeId);
     if (_stage) {
       metaList.appendChild(_buildMetaItem('bi-layers-fill',  META.metaStage || 'المرحلة', _stage.name));
     }

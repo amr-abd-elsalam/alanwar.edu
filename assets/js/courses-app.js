@@ -95,19 +95,7 @@
     return m;
   }
 
-  function _findGrade(gradeId) {
-    for (var i = 0; i < DATA.grades.length; i++) {
-      if (DATA.grades[i].id === gradeId) return DATA.grades[i];
-    }
-    return null;
-  }
-
-  function _findStage(stageId) {
-    for (var i = 0; i < DATA.stages.length; i++) {
-      if (DATA.stages[i].id === stageId) return DATA.stages[i];
-    }
-    return null;
-  }
+  /* _findGrade()/_findStage() moved to SharedPage.findGrade()/findStage() */
 
   /* ── SEO Injection ── */
 
@@ -249,7 +237,7 @@
 
     var children = [img, badge];
 
-    var grade = _findGrade(course.gradeId);
+    var grade = SP.findGrade(course.gradeId);
     if (grade) {
       children.push(U.el('span', {
         className: 'course-badge course-badge--grade',
