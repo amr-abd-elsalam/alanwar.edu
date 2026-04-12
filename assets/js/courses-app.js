@@ -430,7 +430,9 @@
       label.setAttribute('for', id);
 
       var countEl = U.el('span', { className: 'filter-count', textContent: U.formatNumberAr(count) });
-      instList.appendChild(U.el('div', { className: 'filter-item' }, [cb, label, countEl]));
+      var item = U.el('div', { className: 'filter-item' + (count === 0 ? ' disabled' : '') }, [cb, label, countEl]);
+      if (count === 0) cb.disabled = true;
+      instList.appendChild(item);
     });
 
     root.appendChild(instList);

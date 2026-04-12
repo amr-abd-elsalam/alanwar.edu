@@ -242,6 +242,12 @@
   border-radius: 100px;
 }
 
+.lesson-preview-badge--active {
+  background: rgba(52, 211, 153, 0.18);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  cursor: pointer;
+}
+
 /* ── Curriculum accordion layout ── */
 
 .curriculum-btn-content {
