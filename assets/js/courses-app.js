@@ -256,15 +256,15 @@
   function _buildCardStats(course) {
     return U.el('div', { className: 'course-card-stats' }, [
       U.el('span', null, [
-        U.el('i', { className: 'bi bi-people-fill me-1', aria: { hidden: 'true' } }),
+        U.el('i', { className: 'bi bi-people-fill ms-1', aria: { hidden: 'true' } }),
         U.formatNumberAr(course.students)
       ]),
       U.el('span', null, [
-        U.el('i', { className: 'bi bi-book-fill me-1', aria: { hidden: 'true' } }),
+        U.el('i', { className: 'bi bi-book-fill ms-1', aria: { hidden: 'true' } }),
         U.formatNumberAr(course.lessons) + ' درس'
       ]),
       U.el('span', null, [
-        U.el('i', { className: 'bi bi-star-fill me-1', aria: { hidden: 'true' } }),
+        U.el('i', { className: 'bi bi-star-fill ms-1', aria: { hidden: 'true' } }),
         U.formatNumberAr(course.rating)
       ])
     ]);
@@ -299,7 +299,7 @@
     var desc = U.el('p', descAttrs);
 
     var instructor = U.el('span', { className: 'course-card-instructor' }, [
-      U.el('i', { className: 'bi bi-person-fill me-1', aria: { hidden: 'true' } }),
+      U.el('i', { className: 'bi bi-person-fill ms-1', aria: { hidden: 'true' } }),
       course.instructor
     ]);
 
