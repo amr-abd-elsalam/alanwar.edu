@@ -604,7 +604,7 @@ var COURSE_DATA = (function () {
 
   var WHATSAPP_NUMBER = "201100343552";
   var BRAND_NAME      = "سنتر الأنوار المحمدية التعليمي";
-  var DOMAIN          = "amr-abd-elsalam.github.io/alanwar.edu";
+  var DOMAIN          = "anwarcenter.one";
 
   /* ── Auto-derive lesson count from curriculum ── */
 
