@@ -681,6 +681,24 @@ var COURSE_DATA = (function () {
       instructorsSectionTitle: 'المدرسين',
       instructorsSectionSubtitle: 'مدرسين متخصصين في كل مادة — شرح مبسط ودعم مباشر',
 
+      /* About page section strings */
+      aboutPlatformBadge: 'المنصة',
+      aboutPlatformTitle: 'تعليم حقيقي',
+      aboutPlatformTitleGradient: 'بأسلوب مبسط',
+      aboutVisionTitle: 'الرؤية',
+      aboutVisionText: 'إن كل طالب يلاقي شرح مبسط ومناسب لسنه ومادته — يساعده يفهم المنهج ويحقق أعلى الدرجات في الامتحان.',
+      aboutMissionTitle: 'الهدف',
+      aboutMissionText: 'كورسات شاملة لكل المواد بأسعار مناسبة — مع تمارين محلولة ونماذج امتحانات ودعم مباشر من المدرسين.',
+      aboutHowBadge: 'طريقة العمل',
+      aboutHowTitle: 'إزاي بنشتغل',
+      aboutHowSubtitle: 'عملية بسيطة وواضحة — من اختيار الكورس لحد ما تبدأ تذاكر',
+      aboutValuesBadge: 'مبادئنا',
+      aboutValuesTitle: 'قيمنا',
+      aboutValuesSubtitle: 'المبادئ اللي بنبني عليها كل حاجة بنقدمها',
+      aboutContactBadge: 'تواصل معانا',
+      aboutContactTitle: 'تواصل معانا',
+      aboutContactSubtitle: 'عندك سؤال عن كورس أو عن عملية الشراء؟ ابعتلنا وهنرد بسرعة.',
+
       /* Course details section titles */
       sectionObjectives: 'هتتعلم إيه',
       sectionCurriculum: 'محتوى الكورس',

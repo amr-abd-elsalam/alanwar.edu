@@ -89,6 +89,34 @@
     }, 'jsonld-about');
   }
 
+  /* ── Section String Injection ── */
+
+  function _populateAboutStrings() {
+    /* Platform section */
+    if (META.aboutPlatformBadge)         SP.setTextById('about-platform-badge-text',    META.aboutPlatformBadge);
+    if (META.aboutPlatformTitle)         SP.setTextById('about-platform-title-text',    META.aboutPlatformTitle);
+    if (META.aboutPlatformTitleGradient) SP.setTextById('about-platform-gradient-text', META.aboutPlatformTitleGradient);
+    if (META.aboutVisionTitle)           SP.setTextById('about-vision-title',           META.aboutVisionTitle);
+    if (META.aboutVisionText)            SP.setTextById('about-vision-text',            META.aboutVisionText);
+    if (META.aboutMissionTitle)          SP.setTextById('about-mission-title',          META.aboutMissionTitle);
+    if (META.aboutMissionText)           SP.setTextById('about-mission-text',           META.aboutMissionText);
+
+    /* How section */
+    if (META.aboutHowBadge)    SP.setTextById('about-how-badge-text',    META.aboutHowBadge);
+    if (META.aboutHowTitle)    SP.setTextById('about-how-title-text',    META.aboutHowTitle);
+    if (META.aboutHowSubtitle) SP.setTextById('about-how-subtitle-text', META.aboutHowSubtitle);
+
+    /* Values section */
+    if (META.aboutValuesBadge)    SP.setTextById('about-values-badge-text',    META.aboutValuesBadge);
+    if (META.aboutValuesTitle)    SP.setTextById('about-values-title-text',    META.aboutValuesTitle);
+    if (META.aboutValuesSubtitle) SP.setTextById('about-values-subtitle-text', META.aboutValuesSubtitle);
+
+    /* Contact section */
+    if (META.aboutContactBadge)    SP.setTextById('about-contact-badge-text',    META.aboutContactBadge);
+    if (META.aboutContactTitle)    SP.setTextById('about-contact-title-text',    META.aboutContactTitle);
+    if (META.aboutContactSubtitle) SP.setTextById('about-contact-subtitle-text', META.aboutContactSubtitle);
+  }
+
   /* ── Dynamic Text ── */
 
   function _populateDynamicText() {
@@ -177,6 +205,7 @@
     injectSEO();
     SP.buildNavBrand();
     SP.buildInlineBrandDomain();
+    _populateAboutStrings();
     _populateDynamicText();
     _buildInstructorsSection();
     SP.buildEmailLinks();
