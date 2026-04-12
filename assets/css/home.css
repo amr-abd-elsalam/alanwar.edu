@@ -428,6 +428,31 @@
   background: rgba(240, 98, 146, 0.05);
 }
 
+.category-card--sky:hover {
+  border-color: var(--sky-600);
+  background: rgba(79, 195, 247, 0.05);
+}
+
+.category-card--lime:hover {
+  border-color: var(--lime-600);
+  background: rgba(198, 255, 0, 0.05);
+}
+
+.category-card--orange:hover {
+  border-color: var(--orange-600);
+  background: rgba(255, 167, 38, 0.05);
+}
+
+.category-card--indigo:hover {
+  border-color: var(--indigo-600);
+  background: rgba(121, 134, 203, 0.05);
+}
+
+.category-card--red:hover {
+  border-color: var(--red-600);
+  background: rgba(239, 83, 80, 0.05);
+}
+
 .category-icon {
   width: 3rem;
   height: 3rem;
@@ -466,6 +491,31 @@
 .category-icon--rose {
   background: rgba(240, 98, 146, 0.12);
   color: var(--rose-400);
+}
+
+.category-icon--sky {
+  background: rgba(79, 195, 247, 0.12);
+  color: var(--sky-400);
+}
+
+.category-icon--lime {
+  background: rgba(198, 255, 0, 0.12);
+  color: var(--lime-400);
+}
+
+.category-icon--orange {
+  background: rgba(255, 167, 38, 0.12);
+  color: var(--orange-400);
+}
+
+.category-icon--indigo {
+  background: rgba(121, 134, 203, 0.12);
+  color: var(--indigo-400);
+}
+
+.category-icon--red {
+  background: rgba(239, 83, 80, 0.12);
+  color: var(--red-400);
 }
 
 .category-name {

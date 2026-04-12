@@ -24,7 +24,8 @@ var COURSE_DATA = (function () {
 
   var stages = [
     { id: 'primary',     name: 'المرحلة الابتدائية' },
-    { id: 'preparatory', name: 'المرحلة الاعدادية'  }
+    { id: 'preparatory', name: 'المرحلة الاعدادية'  },
+    { id: 'secondary',   name: 'المرحلة الثانوية'   }
   ];
 
   /* ── Grades ── */
@@ -35,7 +36,8 @@ var COURSE_DATA = (function () {
     { id: 'grade-6', stageId: 'primary',     name: 'الصف السادس الابتدائي',  shortName: '6 ابتدائي' },
     { id: 'grade-7', stageId: 'preparatory', name: 'الصف الأول الاعدادي',    shortName: '1 اعدادي'  },
     { id: 'grade-8', stageId: 'preparatory', name: 'الصف الثاني الاعدادي',   shortName: '2 اعدادي'  },
-    { id: 'grade-9', stageId: 'preparatory', name: 'الصف الثالث الاعدادي',   shortName: '3 اعدادي'  }
+    { id: 'grade-9',  stageId: 'preparatory', name: 'الصف الثالث الاعدادي',   shortName: '3 اعدادي'  },
+    { id: 'grade-10', stageId: 'secondary',   name: 'الصف الأول الثانوي',     shortName: '1 ثانوي'   }
   ];
 
   /* ── Subjects ── */
@@ -46,15 +48,41 @@ var COURSE_DATA = (function () {
     { id: 'math',    name: 'الرياضيات',                      icon: 'bi-calculator',     color: 'cyan'    },
     { id: 'english', name: 'اللغة الإنجليزية',                icon: 'bi-translate',      color: 'purple'  },
     { id: 'social',  name: 'الدراسات الاجتماعية',             icon: 'bi-globe-americas', color: 'amber'   },
-    { id: 'cs',      name: 'البرمجة وتكنولوجيا المعلومات',    icon: 'bi-code-slash',     color: 'rose'    }
+    { id: 'cs',      name: 'البرمجة وتكنولوجيا المعلومات',    icon: 'bi-code-slash',     color: 'rose'    },
+    { id: 'religion',            name: 'التربية الدينية',                   icon: 'bi-moon-stars',      color: 'sky'     },
+    { id: 'integrated-science',  name: 'العلوم المتكاملة',                  icon: 'bi-stars',           color: 'lime'    },
+    { id: 'history',             name: 'التاريخ',                           icon: 'bi-hourglass-split', color: 'orange'  },
+    { id: 'philosophy',          name: 'الفلسفة والمنطق',                   icon: 'bi-lightbulb',       color: 'indigo'  },
+    { id: 'italian',             name: 'اللغة الإيطالية',                   icon: 'bi-flag',            color: 'red'     }
   ];
 
   /* ── Instructors ── */
 
   var instructors = [
-    { id: 'youssef-elsebae', name: 'مستر يوسف السبع',    subjectId: 'arabic',  phone: '', bio: 'مدرس لغة عربية للمرحلة الاعدادية والابتدائية' },
-    { id: 'mostafa-mahmoud', name: 'أ/ مصطفى محمود',     subjectId: 'science', phone: '', bio: 'مدرس علوم للمرحلة الابتدائية والاعدادية' },
-    { id: 'hussein-elmasry', name: 'الأستاذ حسين المصري', subjectId: 'cs',      phone: '', bio: 'رئيس قسم بمنطقة حدائق القبة — مدرس برمجة وتكنولوجيا المعلومات' }
+    /* ── المرحلة الابتدائية ── */
+    { id: 'hoda-ahmed',          name: 'ميس هدى أحمد',            subjectId: 'arabic',   phone: '', bio: 'مدرسة لغة عربية للمرحلة الابتدائية' },
+    { id: 'bilal-bakr',          name: 'الأستاذ بلال بكر',         subjectId: 'math',     phone: '', bio: 'مدرس رياضيات للمرحلة الابتدائية والاعدادية' },
+    { id: 'esraa',               name: 'ميس إسراء',               subjectId: 'english',  phone: '', bio: 'مدرسة لغة إنجليزية للمرحلة الابتدائية' },
+    { id: 'abdel-latif',         name: 'الأستاذ عبداللطيف',        subjectId: 'english',  phone: '', bio: 'مدرس لغة إنجليزية للمرحلة الابتدائية والاعدادية' },
+    { id: 'aya-ahmed',           name: 'ميس آية أحمد',            subjectId: 'science',  phone: '', bio: 'مدرسة علوم للمرحلة الابتدائية' },
+    { id: 'abdel-rahman-ragab',  name: 'الأستاذ عبدالرحمن رجب',   subjectId: 'social',   phone: '', bio: 'مدرس دراسات اجتماعية للمرحلة الابتدائية' },
+    { id: 'hany-ibrahim',        name: 'الأستاذ هاني إبراهيم',     subjectId: 'religion', phone: '', bio: 'مدرس تربية دينية للمرحلة الابتدائية والاعدادية والثانوية' },
+
+    /* ── المرحلة الاعدادية ── */
+    { id: 'youssef-elsebae',     name: 'مستر يوسف السبع',          subjectId: 'arabic',   phone: '', bio: 'مدرس لغة عربية للمرحلة الاعدادية' },
+    { id: 'mostafa-mahmoud',     name: 'أ/ مصطفى محمود',           subjectId: 'science',  phone: '', bio: 'مدرس علوم للمرحلة الاعدادية' },
+    { id: 'mohamed-elnadar',     name: 'الأستاذ محمد النضار',       subjectId: 'social',   phone: '', bio: 'مدرس دراسات اجتماعية للمرحلة الاعدادية' },
+    { id: 'hussein-elmasry',     name: 'الأستاذ حسين المصري',      subjectId: 'cs',       phone: '', bio: 'رئيس قسم بمنطقة حدائق القبة — مدرس برمجة وتكنولوجيا المعلومات' },
+    { id: 'hesham-omar',         name: 'مستر هشام عمر',            subjectId: 'english',  phone: '', bio: 'مدرس لغة إنجليزية للصف الثالث الاعدادي والمرحلة الثانوية' },
+
+    /* ── المرحلة الثانوية ── */
+    { id: 'islam-farag',         name: 'الأستاذ إسلام فرج',        subjectId: 'arabic',   phone: '', bio: 'مدرس لغة عربية للمرحلة الثانوية' },
+    { id: 'mohamed-hassan',      name: 'الأستاذ محمد حسن',         subjectId: 'english',  phone: '', bio: 'مدرس لغة إنجليزية للمرحلة الثانوية' },
+    { id: 'mostafa-nagy',        name: 'الأستاذ مصطفى ناجي',       subjectId: 'math',     phone: '', bio: 'مدرس رياضيات للمرحلة الثانوية' },
+    { id: 'dr-seif',             name: 'د. سيف',                   subjectId: 'integrated-science', phone: '', bio: 'مدرس علوم متكاملة للمرحلة الثانوية' },
+    { id: 'islam-amer',          name: 'الأستاذ إسلام عامر',       subjectId: 'history',  phone: '', bio: 'مدرس تاريخ للمرحلة الثانوية' },
+    { id: 'mohamed-elshatr',     name: 'الأستاذ محمد الشاطر',      subjectId: 'philosophy', phone: '', bio: 'مدرس فلسفة ومنطق للمرحلة الثانوية' },
+    { id: 'alaa-salah',          name: 'سنيور علاء صلاح الدين',    subjectId: 'italian',  phone: '', bio: 'مدرس لغة إيطالية للمرحلة الثانوية' }
   ];
 
   /* ── Course Definitions ── */
@@ -603,9 +631,9 @@ var COURSE_DATA = (function () {
 
     META: {
       /* ── SEO / Branding ── */
-      tagline:          'سنتر الأنوار المحمدية التعليمي — ابتدائي واعدادي',
-      description:      'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية في كل المواد: عربي، علوم، رياضيات، انجليزي، دراسات، وبرمجة. شرح تفصيلي من أفضل المدرسين مع دعم مباشر عبر واتساب.',
-      descriptionShort: 'سنتر الأنوار المحمدية — كورسات أونلاين ابتدائي واعدادي مع أفضل المدرسين.',
+      tagline:          'سنتر الأنوار المحمدية التعليمي — ابتدائي واعدادي وثانوي',
+      description:      'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية والثانوية في كل المواد. شرح تفصيلي من أفضل المدرسين مع دعم مباشر عبر واتساب.',
+      descriptionShort: 'سنتر الأنوار المحمدية — كورسات أونلاين ابتدائي واعدادي وثانوي مع أفضل المدرسين.',
       ogImage:          '/assets/img/og-image.png',
       supportEmail:     'eslamkotp53@gmail.com',
       foundingYear:     '2025',
@@ -626,8 +654,8 @@ var COURSE_DATA = (function () {
       /* Hero section (index.html) */
       heroLine1:    'تعليم أفضل لأولادك،',
       heroLine2:    'من أفضل المدرسين.',
-      heroSubtitle: 'كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية — عربي، علوم، رياضيات، انجليزي، ودراسات. شرح تفصيلي من مدرسين متخصصين ودعم مباشر عبر واتساب.',
-      heroBadge:    'سنتر الأنوار المحمدية — ابتدائي واعدادي',
+      heroSubtitle: 'كورسات أونلاين لطلاب المرحلة الابتدائية والاعدادية والثانوية — شرح تفصيلي من مدرسين متخصصين ودعم مباشر عبر واتساب.',
+      heroBadge:    'سنتر الأنوار المحمدية — ابتدائي واعدادي وثانوي',
 
       /* Featured section (index.html) */
       featuredBadge:    'أحدث الكورسات',
@@ -658,7 +686,7 @@ var COURSE_DATA = (function () {
       ctaSubtitle: 'كورسات شاملة لكل المواد والصفوف — شرح مبسط من أفضل المدرسين، تمارين محلولة، ودعم مباشر. سجّل النهارده وابدأ فوراً.',
 
       /* Footer tagline (all pages) */
-      footerTagline: 'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب الابتدائي والاعدادي. شرح تفصيلي ودعم مباشر.',
+      footerTagline: 'سنتر الأنوار المحمدية التعليمي — كورسات أونلاين لطلاب الابتدائي والاعدادي والثانوي. شرح تفصيلي ودعم مباشر.',
 
       /* Course level labels (English key → Arabic display) */
       levels: {
@@ -686,7 +714,7 @@ var COURSE_DATA = (function () {
       aboutPlatformTitle: 'تعليم حقيقي',
       aboutPlatformTitleGradient: 'بأسلوب مبسط',
       aboutVisionTitle: 'الرؤية',
-      aboutVisionText: 'إن كل طالب يلاقي شرح مبسط ومناسب لسنه ومادته — يساعده يفهم المنهج ويحقق أعلى الدرجات في الامتحان.',
+      aboutVisionText: 'إن كل طالب — من الابتدائي للثانوي — يلاقي شرح مبسط ومناسب لسنه ومادته يساعده يفهم المنهج ويحقق أعلى الدرجات.',
       aboutMissionTitle: 'الهدف',
       aboutMissionText: 'كورسات شاملة لكل المواد بأسعار مناسبة — مع تمارين محلولة ونماذج امتحانات ودعم مباشر من المدرسين.',
       aboutHowBadge: 'طريقة العمل',

@@ -108,6 +108,41 @@
   --rose-700: #c2185b;
   --rose-800: rgba(240, 98, 146, 0.3);
 
+  /* ── Sky Scale ── */
+  --sky-400: #4fc3f7;
+  --sky-500: #29b6f6;
+  --sky-600: #03a9f4;
+  --sky-700: #0288d1;
+  --sky-800: rgba(79, 195, 247, 0.3);
+
+  /* ── Lime Scale ── */
+  --lime-400: #c6ff00;
+  --lime-500: #aeea00;
+  --lime-600: #9e9d24;
+  --lime-700: #827717;
+  --lime-800: rgba(198, 255, 0, 0.3);
+
+  /* ── Orange Scale ── */
+  --orange-400: #ffa726;
+  --orange-500: #ff9800;
+  --orange-600: #fb8c00;
+  --orange-700: #ef6c00;
+  --orange-800: rgba(255, 167, 38, 0.3);
+
+  /* ── Indigo Scale ── */
+  --indigo-400: #7986cb;
+  --indigo-500: #5c6bc0;
+  --indigo-600: #3f51b5;
+  --indigo-700: #303f9f;
+  --indigo-800: rgba(121, 134, 203, 0.3);
+
+  /* ── Red Scale ── */
+  --red-400: #ef5350;
+  --red-500: #f44336;
+  --red-600: #e53935;
+  --red-700: #c62828;
+  --red-800: rgba(239, 83, 80, 0.3);
+
   /* ── Gold Scale (price display) ── */
   --gold-400: #e9c452;
   --gold-500: #e2b340;
@@ -691,6 +726,31 @@ body {
 
 .course-badge--rose {
   background: var(--rose-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--sky {
+  background: var(--sky-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--lime {
+  background: var(--lime-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--orange {
+  background: var(--orange-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--indigo {
+  background: var(--indigo-400);
+  color: var(--bg-deep);
+}
+
+.course-badge--red {
+  background: var(--red-400);
   color: var(--bg-deep);
 }
 

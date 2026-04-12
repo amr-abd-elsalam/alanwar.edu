@@ -566,6 +566,36 @@
   border: 1px solid rgba(240, 98, 146, 0.3);
 }
 
+.about-instructor-icon--sky {
+  background: rgba(79, 195, 247, 0.15);
+  color: #4fc3f7;
+  border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+.about-instructor-icon--lime {
+  background: rgba(198, 255, 0, 0.15);
+  color: #c6ff00;
+  border: 1px solid rgba(198, 255, 0, 0.3);
+}
+
+.about-instructor-icon--orange {
+  background: rgba(255, 167, 38, 0.15);
+  color: #ffa726;
+  border: 1px solid rgba(255, 167, 38, 0.3);
+}
+
+.about-instructor-icon--indigo {
+  background: rgba(121, 134, 203, 0.15);
+  color: #7986cb;
+  border: 1px solid rgba(121, 134, 203, 0.3);
+}
+
+.about-instructor-icon--red {
+  background: rgba(239, 83, 80, 0.15);
+  color: #ef5350;
+  border: 1px solid rgba(239, 83, 80, 0.3);
+}
+
 .about-instructor-name {
   font-size: 1.15rem;
   font-weight: 700;
@@ -623,4 +653,34 @@
   background: rgba(240, 98, 146, 0.15);
   color: #f06292;
   border: 1px solid rgba(240, 98, 146, 0.3);
+}
+
+.about-instructor-badge--sky {
+  background: rgba(79, 195, 247, 0.15);
+  color: #4fc3f7;
+  border: 1px solid rgba(79, 195, 247, 0.3);
+}
+
+.about-instructor-badge--lime {
+  background: rgba(198, 255, 0, 0.15);
+  color: #c6ff00;
+  border: 1px solid rgba(198, 255, 0, 0.3);
+}
+
+.about-instructor-badge--orange {
+  background: rgba(255, 167, 38, 0.15);
+  color: #ffa726;
+  border: 1px solid rgba(255, 167, 38, 0.3);
+}
+
+.about-instructor-badge--indigo {
+  background: rgba(121, 134, 203, 0.15);
+  color: #7986cb;
+  border: 1px solid rgba(121, 134, 203, 0.3);
+}
+
+.about-instructor-badge--red {
+  background: rgba(239, 83, 80, 0.15);
+  color: #ef5350;
+  border: 1px solid rgba(239, 83, 80, 0.3);
 }
