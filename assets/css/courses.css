@@ -48,6 +48,15 @@
   font-display: swap;
 }
 
+/* ── Font Face — Cairo Variable (self-hosted, Arabic) ── */
+
+@font-face {
+  font-family: 'Cairo';
+  src: url('../fonts/cairo-variable.woff2') format('woff2');
+  font-weight: 200 1000;
+  font-display: swap;
+}
+
 /* ── Variables ── */
 
 :root {
@@ -188,7 +197,7 @@
   --z-toast: 1060;
 
   /* ── Font ── */
-  --font-base: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-base: 'Cairo', 'Inter', system-ui, -apple-system, sans-serif;
 }
 
 /* ── Breadcrumb RTL fix ── */
